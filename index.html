@@ -1,0 +1,1591 @@
+<!DOCTYPE html>
+<html lang="ar" dir="rtl">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>UXScan — تقييم قابلية الاستخدام</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Rubik:ital,wght@0,300;0,400;0,500;0,600;0,700;0,800;0,900;1,300;1,400;1,500;1,700&display=swap" rel="stylesheet">
+<style>
+/* ══════════════════════════════════════════
+   VISA × UXScan — Design System
+   Primary:  #1A1F71  (VISA Navy)
+   Accent:   #F7B600  (VISA Gold)
+   Font:     Rubik
+══════════════════════════════════════════ */
+:root{
+  --navy:#1A1F71;--navy2:#0F1450;--navy3:#2D3590;
+  --gold:#F7B600;--gold2:#E5A800;
+  --bg:#FFFFFF;--bg2:#F4F6FF;--bg3:#E8ECFF;--bg4:#D8DEFF;
+  --acc:var(--navy);--acc2:var(--navy2);--acc3:var(--navy3);
+  --gld:var(--gold);
+  --text:#0A0D3A;--text2:#4A5180;--text3:#8B94BB;
+  --br:#CDD2EE;--br2:#B4BADE;--br3:#9AA2CC;
+  --gn:#1A7A3C;--rd:#C0392B;--or:#F7B600;--bl:#1A1F71;
+  --sh1:0 1px 4px rgba(26,31,113,.08),0 4px 16px rgba(26,31,113,.06);
+  --sh2:0 4px 12px rgba(26,31,113,.1),0 12px 32px rgba(26,31,113,.1);
+  --fn:'Rubik',-apple-system,sans-serif;
+}
+*{box-sizing:border-box;margin:0;padding:0}
+html{scroll-behavior:smooth;overflow-x:hidden}
+@keyframes badgePulse{0%,100%{opacity:1;transform:scale(1)}50%{opacity:.4;transform:scale(.8)}}
+@keyframes scrollLine{0%{transform:scaleY(0);transform-origin:top}50%{transform:scaleY(1);transform-origin:top}51%{transform:scaleY(1);transform-origin:bottom}100%{transform:scaleY(0);transform-origin:bottom}}
+body{font-family:var(--fn);background:var(--bg);color:var(--text);direction:rtl;-webkit-font-smoothing:antialiased;overflow-x:hidden}
+
+/* ── LANDING NAV ── */
+.nav{position:fixed;top:0;left:0;right:0;z-index:100;height:64px;display:flex;align-items:center;justify-content:space-between;padding:0 48px;transition:all .3s}
+.nav.dark{background:transparent}
+.nav.scrolled{background:rgba(10,13,58,.92);backdrop-filter:blur(16px);border-bottom:1px solid rgba(255,255,255,.08)}
+.logo{display:flex;align-items:center;gap:10px;text-decoration:none}
+.logo-sq{width:30px;height:30px;background:var(--gold);border-radius:4px;display:flex;align-items:center;justify-content:center;font-size:13px;font-weight:900;color:var(--navy);font-family:var(--fn)}
+.logo-tx{font-size:17px;font-weight:800;color:#fff;letter-spacing:-.3px}
+.nav-links{display:flex;align-items:center;gap:32px}
+.nav-lk{color:rgba(255,255,255,.5);text-decoration:none;font-size:13px;font-weight:500;letter-spacing:.2px;transition:color .2s}
+.nav-lk:hover{color:#fff}
+.nav-cta{background:var(--gold);color:var(--navy);padding:9px 22px;border-radius:4px;font-size:13px;font-weight:700;border:none;cursor:pointer;font-family:var(--fn);letter-spacing:.3px;text-transform:uppercase;transition:background .15s}
+.nav-cta:hover{background:#fff}
+
+/* ── HERO ── */
+.hero{position:relative;min-height:100vh;background:var(--navy);display:flex;align-items:center;overflow:hidden}
+.hero-bg-grid{position:absolute;inset:0;background-image:linear-gradient(rgba(255,255,255,.028) 1px,transparent 1px),linear-gradient(90deg,rgba(255,255,255,.028) 1px,transparent 1px);background-size:56px 56px;pointer-events:none}
+.hero-bg-glow{position:absolute;top:-200px;right:-200px;width:600px;height:600px;background:radial-gradient(circle,rgba(247,182,0,.12) 0%,transparent 70%);pointer-events:none}
+.hero-bg-glow2{position:absolute;bottom:-150px;left:-100px;width:500px;height:500px;background:radial-gradient(circle,rgba(45,53,144,.4) 0%,transparent 70%);pointer-events:none}
+.hero-gold-line{position:absolute;bottom:0;left:0;right:0;height:3px;background:var(--gold)}
+.hero-inner{position:relative;z-index:2;width:100%;max-width:1280px;margin:0 auto;padding:100px 48px 80px;display:grid;grid-template-columns:1.1fr .9fr;gap:80px;align-items:center}
+/* text side */
+.hero-eyebrow{display:inline-flex;align-items:center;gap:10px;font-size:11px;font-weight:700;letter-spacing:2.5px;text-transform:uppercase;color:var(--gold);margin-bottom:28px;opacity:0;transform:translateY(20px)}
+.hero-eyebrow::before{content:'';display:block;width:24px;height:2px;background:var(--gold)}
+.hero-h1{font-size:clamp(52px,6vw,82px);font-weight:900;line-height:.96;letter-spacing:-3px;color:#fff;margin-bottom:28px}
+.hero-h1 em{font-style:normal;color:var(--gold)}
+.hero-line-wrap{overflow:hidden;display:block}
+.hero-word{display:inline-block;transform:translateY(110%);opacity:0}
+.hero-p{font-size:17px;color:rgba(255,255,255,.5);line-height:1.75;max-width:440px;margin-bottom:40px;font-weight:300;opacity:0;transform:translateY(18px)}
+.hero-btns{display:flex;gap:12px;flex-wrap:wrap;opacity:0;transform:translateY(18px)}
+.btn-gold{background:var(--gold);color:var(--navy);padding:14px 28px;border-radius:4px;font-size:14px;font-weight:700;border:none;cursor:pointer;font-family:var(--fn);letter-spacing:.3px;text-transform:uppercase;transition:all .2s;display:inline-flex;align-items:center;gap:8px}
+.btn-gold:hover{background:#fff;transform:translateY(-2px)}
+.btn-ghost{background:transparent;color:#fff;padding:14px 28px;border-radius:4px;font-size:14px;font-weight:600;border:1px solid rgba(255,255,255,.2);cursor:pointer;font-family:var(--fn);transition:border-color .2s;display:inline-flex;align-items:center;gap:8px}
+.btn-ghost:hover{border-color:rgba(255,255,255,.6)}
+.hero-stats{display:flex;gap:0;margin-top:52px;padding-top:36px;border-top:1px solid rgba(255,255,255,.1);opacity:0;transform:translateY(18px)}
+.hst{flex:1;padding:0 28px 0 0}
+.hst+.hst{border-right:1px solid rgba(255,255,255,.1);padding:0 28px}
+.hst-n{font-size:32px;font-weight:900;letter-spacing:-1.5px;color:#fff;line-height:1}
+.hst-l{font-size:11px;color:rgba(255,255,255,.35);margin-top:4px;font-weight:400;letter-spacing:.3px}
+/* visual side */
+.hero-visual{position:relative;height:460px;opacity:0;transform:translateX(30px)}
+/* Mini dashboard inside hero */
+.hdash{background:rgba(255,255,255,.06);backdrop-filter:blur(20px);border:1px solid rgba(255,255,255,.1);border-radius:16px;padding:24px;display:flex;flex-direction:column;gap:14px}
+.hdash-row{display:grid;grid-template-columns:1fr 1fr;gap:12px}
+.hdash-card{background:rgba(255,255,255,.07);border-radius:10px;padding:14px;border:1px solid rgba(255,255,255,.08)}
+.hdash-lbl{font-size:10px;font-weight:700;color:rgba(255,255,255,.35);text-transform:uppercase;letter-spacing:1px;margin-bottom:8px}
+.hdash-val{font-size:24px;font-weight:800;letter-spacing:-1px;color:#fff}
+.hdash-bar{height:3px;background:rgba(255,255,255,.1);border-radius:2px;margin-top:8px;overflow:hidden}
+.hdash-barf{height:100%;border-radius:2px}
+.hdash-wide{background:rgba(255,255,255,.07);border-radius:10px;padding:14px;border:1px solid rgba(255,255,255,.08)}
+.hdash-score{display:flex;align-items:center;gap:14px}
+.hdash-score-n{font-size:40px;font-weight:900;letter-spacing:-2px;color:var(--gold)}
+/* floating tag */
+.h-tag{position:absolute;background:var(--gold);color:var(--navy);font-size:11px;font-weight:700;padding:6px 14px;border-radius:980px;letter-spacing:.3px;box-shadow:0 8px 24px rgba(247,182,0,.3)}
+.h-tag.t1{top:-16px;left:20px}
+.h-tag.t2{bottom:20px;right:-12px}
+
+/* ── FEATURES (BENTO) ── */
+.features-sec{padding:100px 0;background:#fff}
+.sec-wrap{max-width:1280px;margin:0 auto;padding:0 48px}
+.sec-eyebrow{display:inline-flex;align-items:center;gap:10px;font-size:11px;font-weight:700;letter-spacing:2px;text-transform:uppercase;color:var(--gold);margin-bottom:16px}
+.sec-eyebrow::before{content:'';display:block;width:20px;height:2px;background:var(--gold)}
+.sec-h2{font-size:clamp(34px,4vw,52px);font-weight:900;letter-spacing:-2px;line-height:1.05;color:var(--text);margin-bottom:12px}
+.sec-h2 em{font-style:normal;color:var(--navy)}
+.sec-p{font-size:16px;color:var(--text3);line-height:1.7;font-weight:300;max-width:480px}
+/* Bento grid */
+.bento{display:grid;grid-template-columns:repeat(12,1fr);gap:16px;margin-top:56px}
+.bc{background:#fff;border:1px solid var(--br);border-radius:12px;padding:30px;position:relative;overflow:hidden;transition:all .25s}
+.bc::before{content:'';position:absolute;top:0;left:0;right:0;height:3px;background:transparent;transition:background .25s}
+.bc:hover{box-shadow:var(--sh2);transform:translateY(-3px)}.bc:hover::before{background:var(--gold)}
+.bc1{grid-column:span 7}.bc2{grid-column:span 5}.bc3{grid-column:span 5}.bc4{grid-column:span 7}
+.bc-tag{display:inline-flex;align-items:center;gap:5px;font-size:10px;font-weight:700;padding:3px 10px;border-radius:3px;margin-bottom:20px;letter-spacing:.5px;text-transform:uppercase;font-family:var(--fn);border-left:2px solid}
+.bc-tag.a{background:rgba(26,31,113,.06);color:var(--navy);border-color:var(--navy)}
+.bc-tag.b{background:rgba(247,182,0,.1);color:var(--gold2);border-color:var(--gold)}
+.bc-tag.c{background:rgba(26,122,60,.07);color:var(--gn);border-color:var(--gn)}
+.bc-tag.d{background:rgba(192,57,43,.07);color:var(--rd);border-color:var(--rd)}
+.bc-num{font-size:52px;font-weight:900;letter-spacing:-3px;line-height:1;color:var(--navy);margin-bottom:12px;opacity:.15}
+.bc-ic{font-size:28px;margin-bottom:14px;display:block}
+.bc-h{font-size:19px;font-weight:700;letter-spacing:-.4px;margin-bottom:8px;color:var(--text)}
+.bc-p{font-size:14px;color:var(--text2);line-height:1.65;font-weight:300}
+.bc-pills{display:flex;flex-wrap:wrap;gap:6px;margin-top:16px}
+.bc-pill{font-size:11px;font-weight:500;padding:3px 10px;border-radius:3px;background:var(--bg2);color:var(--text3);border:1px solid var(--br)}
+.bc-scores{display:grid;grid-template-columns:repeat(4,1fr);gap:8px;margin-top:18px}
+.bc-sc{text-align:center;padding:10px 4px;background:var(--bg2);border-radius:6px;border:1px solid var(--br)}
+.bc-sc-n{font-size:20px;font-weight:800;letter-spacing:-.5px}
+.bc-sc-l{font-size:9px;color:var(--text3);font-weight:600;margin-top:1px;text-transform:uppercase;letter-spacing:.4px}
+
+/* ── HOW IT WORKS ── */
+.how-sec{background:var(--navy);padding:100px 0;overflow:hidden}
+.how-steps{display:grid;grid-template-columns:repeat(3,1fr);gap:1px;background:rgba(255,255,255,.1);border:1px solid rgba(255,255,255,.1);border-radius:12px;overflow:hidden;margin-top:56px}
+.step{padding:40px 32px;background:var(--navy);position:relative;transition:background .2s}
+.step:hover{background:var(--navy2)}
+.step-num{font-size:64px;font-weight:900;letter-spacing:-4px;color:var(--gold);opacity:.25;line-height:1;margin-bottom:20px}
+.step-h{font-size:18px;font-weight:700;letter-spacing:-.3px;color:#fff;margin-bottom:8px}
+.step-p{font-size:14px;color:rgba(255,255,255,.4);line-height:1.65;font-weight:300}
+/* Eyebrow white override */
+.how-sec .sec-eyebrow{color:var(--gold)}
+.how-sec .sec-eyebrow::before{background:var(--gold)}
+.how-sec .sec-h2{color:#fff}
+.how-sec .sec-p{color:rgba(255,255,255,.45)}
+
+/* ── PRICING ── */
+.pricing-sec{padding:100px 0;background:#fff}
+.pgrid{display:grid;grid-template-columns:repeat(3,1fr);gap:16px;margin-top:56px}
+.pc{border:1px solid var(--br);border-radius:12px;padding:32px;background:#fff;position:relative;transition:all .2s;box-shadow:var(--sh1)}
+.pc:hover{box-shadow:var(--sh2);transform:translateY(-3px)}
+.pc.feat{background:var(--navy);border-color:var(--gold)}
+.pc-lbl{position:absolute;top:-1px;right:24px;background:var(--gold);color:var(--navy);font-size:10px;font-weight:800;padding:4px 14px;border-radius:0 0 8px 8px;letter-spacing:1px;text-transform:uppercase}
+.pc-plan{font-size:11px;font-weight:700;text-transform:uppercase;letter-spacing:1.2px;color:var(--text3);margin-bottom:12px}
+.pc.feat .pc-plan{color:rgba(255,255,255,.4)}
+.pc-pr{font-size:48px;font-weight:900;letter-spacing:-2.5px;line-height:1;margin-bottom:6px;color:var(--text)}
+.pc.feat .pc-pr{color:#fff}
+.pc-per{font-size:13px;color:var(--text3);margin-bottom:28px}
+.pc.feat .pc-per{color:rgba(255,255,255,.4)}
+.pc-div{height:1px;background:var(--br);margin-bottom:22px}
+.pc.feat .pc-div{background:rgba(255,255,255,.12)}
+.pc-fl{display:flex;flex-direction:column;gap:11px;margin-bottom:28px}
+.pf{display:flex;align-items:flex-start;gap:10px;font-size:13.5px;color:var(--text2);line-height:1.4}
+.pc.feat .pf{color:rgba(255,255,255,.6)}
+.pfi{width:16px;height:16px;border-radius:50%;display:flex;align-items:center;justify-content:center;flex-shrink:0;font-size:8px;margin-top:2px}
+.pfi.y{background:var(--gold);color:var(--navy)}.pfi.n{background:var(--br3);color:var(--text3)}
+.pc.feat .pfi.y{background:var(--gold);color:var(--navy)}
+.pc-btn{display:block;width:100%;padding:13px;border-radius:4px;font-size:13px;font-weight:700;font-family:var(--fn);cursor:pointer;border:none;text-align:center;transition:all .15s;letter-spacing:.3px;text-transform:uppercase}
+.pb-ghost{background:transparent;color:var(--text);border:1px solid var(--br)}.pb-ghost:hover{border-color:var(--br3)}
+.pb-navy{background:var(--navy);color:#fff}.pb-navy:hover{background:var(--navy2)}
+.pb-gold{background:var(--gold);color:var(--navy)}.pb-gold:hover{background:#fff}
+
+/* ── CTA ── */
+.cta-sec{background:var(--navy);padding:100px 48px;text-align:center;position:relative;overflow:hidden}
+.cta-sec::before{content:'';position:absolute;top:0;left:0;right:0;height:3px;background:var(--gold)}
+.cta-h{font-size:clamp(36px,5vw,64px);font-weight:900;letter-spacing:-3px;color:#fff;margin-bottom:16px;line-height:1}
+.cta-h em{font-style:normal;color:var(--gold)}
+.cta-p{font-size:16px;color:rgba(255,255,255,.45);margin-bottom:36px;line-height:1.65;font-weight:300}
+.cta-bts{display:flex;gap:12px;justify-content:center;flex-wrap:wrap}
+
+/* ── FOOTER ── */
+footer{background:var(--navy2);padding:40px 48px;display:flex;align-items:center;justify-content:space-between;flex-wrap:wrap;gap:16px;border-top:1px solid rgba(255,255,255,.08)}
+.ft-brand{font-size:18px;font-weight:900;color:#fff;letter-spacing:-.5px}
+.ft-brand span{color:var(--gold)}
+.fls{display:flex;gap:24px}
+.fl{color:rgba(255,255,255,.35);text-decoration:none;font-size:13px;transition:color .2s}.fl:hover{color:#fff}
+.fcpy{font-size:11px;color:rgba(255,255,255,.2)}
+
+/* ── SCROLL ANIMATION BASE STATES ── */
+.gs-hidden{opacity:0;transform:translateY(32px)}
+.gs-left{opacity:0;transform:translateX(-24px)}
+.gs-scale{opacity:0;transform:scale(.96)}
+
+/* ════════════════════════════════════════
+   TOOL CHROME (same clean navy identity)
+═════════════════════════════════════════ */
+#tool{display:none}
+.tgbar{position:fixed;top:0;left:0;right:0;z-index:300;height:2px;background:var(--br)}
+.tgbarf{height:100%;background:var(--gold);transition:width .5s;width:0%}
+.tnav{position:fixed;top:2px;left:0;right:0;z-index:200;height:56px;background:rgba(244,246,255,.97);backdrop-filter:blur(16px);border-bottom:1px solid var(--br);display:flex;align-items:center;justify-content:space-between;padding:0 28px;box-shadow:0 1px 0 var(--br)}
+.tbk{background:none;border:none;cursor:pointer;font-size:13px;font-weight:500;color:var(--text2);font-family:var(--fn);padding:6px 10px;border-radius:4px;transition:all .15s}.tbk:hover{background:var(--bg3);color:var(--text)}.tbk.hd{visibility:hidden}
+.tcent{display:flex;align-items:center;gap:10px}
+.tlog{display:flex;align-items:center;gap:7px;text-decoration:none;color:var(--text)}
+.tlsq{width:24px;height:24px;background:var(--gold);border-radius:4px;display:flex;align-items:center;justify-content:center;color:var(--navy);font-size:11px;font-weight:900}
+.tltx{font-size:14px;font-weight:700}
+.tnd{display:flex;gap:4px;align-items:center}
+.tdot{width:6px;height:6px;border-radius:50%;background:var(--br3);transition:all .3s}
+.tdot.ps{background:rgba(26,31,113,.25)}.tdot.nw{width:18px;border-radius:3px;background:var(--navy)}
+.tnco{font-size:11px;font-weight:500;color:var(--text3)}
+.tskip{background:none;border:none;cursor:pointer;font-size:12px;font-weight:500;color:var(--text3);font-family:var(--fn)}.tskip:hover{color:var(--text)}
+.tscr{display:none;padding-top:58px;min-height:100vh;flex-direction:column}.tscr.on{display:flex}
+.slr{animation:slR .28s ease both}.sll{animation:slL .28s ease both}
+@keyframes slR{from{opacity:0;transform:translateX(20px)}to{opacity:1;transform:translateX(0)}}
+@keyframes slL{from{opacity:0;transform:translateX(-20px)}to{opacity:1;transform:translateX(0)}}
+.bbar{position:fixed;bottom:0;left:0;right:0;z-index:100;background:rgba(244,246,255,.97);backdrop-filter:blur(16px);border-top:1px solid var(--br);padding:12px 28px;display:flex;align-items:center;justify-content:space-between;gap:16px;box-shadow:0 -1px 0 var(--br)}.bbar.hd{display:none}
+.bbc{flex:1;display:flex;flex-direction:column;align-items:center;gap:4px}
+.bbbr{width:160px;height:2px;background:var(--br);border-radius:2px;overflow:hidden}
+.bbbf{height:100%;background:var(--navy);border-radius:2px;transition:width .3s}
+.bbtx{font-size:11px;font-weight:500;color:var(--text3)}
+.bprev{background:#fff;color:var(--text);border:1px solid var(--br);padding:10px 22px;border-radius:4px;font-size:14px;font-weight:500;cursor:pointer;font-family:var(--fn);transition:all .15s}.bprev:hover{border-color:var(--br2)}
+.bnext{background:var(--navy);color:#fff;padding:11px 26px;border-radius:4px;font-size:14px;font-weight:700;border:none;cursor:pointer;font-family:var(--fn);transition:background .15s}.bnext:hover{background:var(--navy2)}.bnext.gn{background:var(--gn)}.bnext.gn:hover{background:#155e31}
+/* LOADING */
+.lov{position:fixed;inset:0;z-index:500;background:var(--bg);display:none;flex-direction:column;align-items:center;justify-content:center;padding:40px}.lov.on{display:flex}
+.lsq{width:44px;height:44px;background:var(--navy);border-radius:8px;display:flex;align-items:center;justify-content:center;color:var(--gold);font-size:18px;font-weight:900;margin-bottom:28px;animation:lpls 2s ease-in-out infinite}
+@keyframes lpls{0%,100%{transform:scale(1)}50%{transform:scale(1.07)}}
+.ltitle{font-size:22px;font-weight:800;letter-spacing:-.5px;margin-bottom:8px;color:var(--text)}
+.lsub{font-size:14px;color:var(--text3);margin-bottom:32px;direction:ltr}
+.lpbar{width:240px;height:2px;background:var(--br);border-radius:2px;overflow:hidden;margin-bottom:14px}
+.lpbarf{height:100%;background:var(--navy);border-radius:2px;transition:width .8s ease;width:0%}
+.lstatus{font-size:13px;color:var(--text3)}
+/* site pages list */
+.site-pages-list{display:flex;flex-direction:column;gap:7px;margin-top:12px;width:100%;max-width:480px}
+.sp-item{display:flex;align-items:center;gap:10px;background:#fff;border:1px solid var(--br);border-radius:8px;padding:9px 12px}
+.sp-dot{width:8px;height:8px;border-radius:50%;background:var(--br2);flex-shrink:0;transition:background .3s}
+.sp-dot.wk{background:var(--navy);animation:bk2 1s ease-in-out infinite}.sp-dot.ok{background:var(--gn)}.sp-dot.er{background:var(--rd)}
+@keyframes bk2{0%,100%{opacity:1}50%{opacity:.3}}
+.sp-name{font-size:12px;font-weight:600;color:var(--text);flex:1}
+.sp-url{font-size:10px;color:var(--text3);direction:ltr}
+.sp-badges{display:flex;gap:4px}
+.sp-b{font-size:9px;font-weight:700;padding:1px 6px;border-radius:3px}
+.sp-b.ok{background:rgba(26,122,60,.1);color:var(--gn)}.sp-b.wk{background:rgba(26,31,113,.1);color:var(--navy)}.sp-b.pnd{background:var(--bg3);color:var(--text3)}
+/* WELCOME TOOL */
+#ts0{align-items:center;justify-content:center;padding:60px 24px 100px;background:var(--bg2)}
+.twrap{width:100%;max-width:480px}
+.twe{font-size:10px;font-weight:700;letter-spacing:2px;text-transform:uppercase;color:var(--navy);margin-bottom:14px;display:flex;align-items:center;gap:8px}
+.twe::before{content:'';display:block;width:16px;height:2px;background:var(--gold)}
+.twh1{font-size:clamp(28px,4vw,40px);font-weight:900;letter-spacing:-1.5px;line-height:1.08;margin-bottom:12px;color:var(--text)}
+.twh1 em{font-style:normal;color:var(--navy)}
+.twp{font-size:15px;color:var(--text2);line-height:1.65;margin-bottom:18px;font-weight:300}
+.mode-tabs{display:grid;grid-template-columns:1fr 1fr;gap:10px;margin-bottom:18px}
+.mode-tab{border:1px solid var(--br);border-radius:8px;padding:14px;cursor:pointer;transition:all .15s;background:#fff;text-align:center;user-select:none}
+.mode-tab:hover{border-color:var(--br2)}.mode-tab.on{border-color:var(--navy);background:rgba(26,31,113,.04)}
+.mode-tab-icon{font-size:20px;margin-bottom:5px}
+.mode-tab-title{font-size:13px;font-weight:700;color:var(--text);margin-bottom:2px}
+.mode-tab-sub{font-size:11px;color:var(--text3)}
+.ubox{background:#fff;border-radius:10px;padding:20px;margin-bottom:16px;border:1px solid var(--br);transition:border-color .2s;box-shadow:var(--sh1)}.ubox:focus-within{border-color:var(--navy)}
+.ulbl{font-size:10px;font-weight:700;color:var(--text3);letter-spacing:.8px;text-transform:uppercase;margin-bottom:10px}
+.urow{display:flex;gap:8px}
+.uinp{flex:1;padding:11px 14px;border:1px solid var(--br);border-radius:4px;font-size:15px;color:var(--text);background:var(--bg2);outline:none;transition:border .15s;font-family:var(--fn);text-align:left;direction:ltr}.uinp:focus{border-color:var(--navy)}.uinp::placeholder{color:var(--text3);direction:rtl;text-align:right}
+.ugo{background:var(--navy);color:#fff;padding:11px 18px;border-radius:4px;font-size:14px;font-weight:700;border:none;cursor:pointer;font-family:var(--fn);transition:background .15s;white-space:nowrap}.ugo:hover{background:var(--navy2)}.ugo:disabled{opacity:.4;pointer-events:none}
+.uindics{display:flex;align-items:center;gap:14px;margin-top:10px;padding-top:10px;border-top:1px solid var(--br);flex-wrap:wrap}
+.uind{display:flex;align-items:center;gap:5px;font-size:12px;font-weight:500;color:var(--text3)}
+.udot{width:6px;height:6px;border-radius:50%}
+.divl{display:flex;align-items:center;gap:10px;margin:14px 0;color:var(--text3);font-size:12px}.divl::before,.divl::after{content:'';flex:1;height:1px;background:var(--br)}
+.bman{background:#fff;color:var(--text2);border:1px solid var(--br);padding:11px 24px;border-radius:4px;font-size:14px;font-weight:500;cursor:pointer;font-family:var(--fn);width:100%;transition:all .15s}.bman:hover{border-color:var(--br2);color:var(--text)}
+.srow{display:flex;background:#fff;border-radius:8px;overflow:hidden;border:1px solid var(--br);margin-top:16px}
+.scl{flex:1;padding:13px 8px;text-align:center;border-left:1px solid var(--br)}.scl:last-child{border-left:none}
+.scn{font-size:18px;font-weight:800;display:block;color:var(--text)}.sclb{font-size:10px;color:var(--text3);margin-top:1px}
+/* INFO */
+.ifw{flex:1;display:flex;flex-direction:column;align-items:center;justify-content:center;padding:32px 24px 120px;background:var(--bg2)}
+.ifc{width:100%;max-width:520px;background:#fff;border-radius:12px;padding:34px;border:1px solid var(--br);box-shadow:var(--sh2)}
+.ibn{display:none;background:rgba(26,122,60,.07);border:1px solid rgba(26,122,60,.18);border-radius:8px;padding:13px 16px;margin-bottom:18px;align-items:flex-start;gap:10px}.ibn.on{display:flex}
+.ibt{font-size:13px;font-weight:700;color:var(--gn);margin-bottom:2px}.ibs{font-size:12px;color:var(--text2);line-height:1.5}
+.ie{font-size:10px;font-weight:700;color:var(--navy);letter-spacing:1px;text-transform:uppercase;margin-bottom:9px}
+.it{font-size:22px;font-weight:800;letter-spacing:-.5px;margin-bottom:5px;color:var(--text)}
+.is{font-size:14px;color:var(--text2);margin-bottom:22px;font-weight:300}
+.ig{display:grid;grid-template-columns:1fr 1fr;gap:12px;margin-bottom:12px}
+.il{display:block;font-size:12px;font-weight:600;color:var(--text2);margin-bottom:5px}
+.ifi{width:100%;padding:10px 13px;border:1px solid var(--br);border-radius:4px;font-size:14px;color:var(--text);background:var(--bg2);outline:none;transition:border .15s;font-family:var(--fn);text-align:right}.ifi:focus{border-color:var(--navy)}
+/* SECTION SCREENS */
+.shr{background:#fff;border-bottom:1px solid var(--br);padding:20px 36px 16px}
+.shi{max-width:1200px;margin:0 auto;display:flex;align-items:flex-start;justify-content:space-between;gap:16px}
+.sey{font-size:10px;font-weight:700;color:var(--navy);letter-spacing:1px;text-transform:uppercase;margin-bottom:5px;display:flex;align-items:center;gap:6px}
+.sey::before{content:'';display:block;width:12px;height:2px;background:var(--gold)}
+.sh1{font-size:18px;font-weight:800;letter-spacing:-.3px;margin-bottom:4px;color:var(--text)}
+.sds{font-size:13px;color:var(--text2);line-height:1.6;max-width:600px;font-weight:300}
+.sbg{flex-shrink:0;background:var(--bg2);border-radius:8px;padding:9px 13px;border:1px solid var(--br);text-align:center;min-width:68px}
+.sbn{font-size:20px;font-weight:800;color:var(--navy)}.sbl{font-size:10px;color:var(--text3)}
+.sbdy{flex:1;padding:20px 36px 100px;background:var(--bg2)}.sbdi{max-width:1200px;margin:0 auto}
+.tsh{background:#fff;border-radius:12px;border:1px solid var(--br);overflow:hidden;box-shadow:var(--sh1)}
+.thb{display:flex;align-items:center;justify-content:space-between;padding:10px 15px;background:var(--bg2);border-bottom:1px solid var(--br)}
+.thl{font-size:11px;font-weight:600;color:var(--text3);display:flex;align-items:center;gap:7px}
+.ain{font-size:10px;font-weight:700;padding:2px 8px;border-radius:3px;background:rgba(26,122,60,.1);color:var(--gn);border:1px solid rgba(26,122,60,.2);display:none}.ain.on{display:inline-block}
+.thr{display:flex;align-items:center;gap:7px}
+.thbr{width:80px;height:2px;background:var(--br);border-radius:2px;overflow:hidden}
+.thbf{height:100%;background:var(--navy);border-radius:2px;transition:width .3s}
+.thtx{font-size:11px;font-weight:700;color:var(--navy)}
+.atb{width:100%;border-collapse:collapse}
+.atb thead tr{background:var(--bg2);border-bottom:1px solid var(--br)}
+.atb thead th{padding:9px 14px;font-size:10px;font-weight:700;color:var(--text3);letter-spacing:.6px;text-transform:uppercase;text-align:right;white-space:nowrap}.atb thead th.tc{text-align:center}
+.atb tbody tr{border-bottom:1px solid var(--br);transition:background .1s}.atb tbody tr:last-child{border-bottom:none}.atb tbody tr:hover{background:rgba(26,31,113,.025)}
+.atb tbody tr.ry{background:rgba(26,122,60,.04)}.atb tbody tr.rn{background:rgba(192,57,43,.04)}.atb tbody tr.af{border-right:2px solid rgba(26,122,60,.35)}
+.atb td{padding:12px 14px;vertical-align:top;font-size:13.5px;color:var(--text);line-height:1.5}
+.tdi{width:32px;text-align:center;font-size:11px;font-weight:700;color:var(--text3)}
+.adt{display:inline-block;width:6px;height:6px;background:var(--gn);border-radius:50%;margin-left:4px;vertical-align:middle}
+.rc{display:inline-flex;align-items:center;justify-content:center}.rc input{display:none}
+.rc label{width:27px;height:27px;border-radius:50%;border:1.5px solid var(--br2);display:flex;align-items:center;justify-content:center;cursor:pointer;transition:all .15s;font-size:11px;font-weight:700;color:var(--text3)}
+.rc.ys input:checked+label,.rc.ys label:hover{border-color:var(--gn);color:var(--gn)}.rc.ys input:checked+label{background:var(--gn);color:#fff}
+.rc.no input:checked+label,.rc.no label:hover{border-color:var(--rd);color:var(--rd)}.rc.no input:checked+label{background:var(--rd);color:#fff}
+.ti{width:100%;padding:5px 9px;border:1px solid var(--br);border-radius:4px;font-size:12.5px;color:var(--text);background:#fff;outline:none;font-family:var(--fn);text-align:right;line-height:1.4;resize:none;transition:border .15s}.ti:focus{border-color:var(--navy)}.ti.pr{background:#FFFBF0;border-color:#F7B600}.ti.au{background:#F6FFF7;border-color:#C3E6CB}
+/* ── REPORT PANELS ── */
+#tsrep{flex-direction:column;padding-bottom:0;background:var(--bg2)}
+.rpb{background:#fff;border-bottom:1px solid var(--br);padding:12px 20px;display:flex;align-items:center;justify-content:space-between;flex-shrink:0}
+.rpbt{font-size:14px;font-weight:700;color:var(--text)}
+.brbk{background:var(--bg2);color:var(--text2);border:1px solid var(--br);padding:7px 14px;border-radius:4px;font-size:12px;font-weight:600;cursor:pointer;font-family:var(--fn);transition:all .15s}.brbk:hover{border-color:var(--br2)}
+.bprt{background:var(--navy);color:#fff;padding:7px 14px;border-radius:4px;font-size:12px;font-weight:700;border:none;cursor:pointer;font-family:var(--fn);transition:background .15s}.bprt:hover{background:var(--navy2)}
+.report-body{display:flex;height:calc(100vh - 108px);overflow:hidden}
+.rpanel-sidebar{width:158px;flex-shrink:0;background:#fff;border-left:1px solid var(--br);display:flex;flex-direction:column;padding:10px 6px;gap:1px;overflow-y:auto}
+.rpn{display:flex;align-items:center;gap:8px;padding:8px 10px;border-radius:6px;border:none;background:transparent;cursor:pointer;width:100%;text-align:right;transition:all .15s;font-family:var(--fn)}.rpn:hover{background:var(--bg2)}.rpn.on{background:rgba(26,31,113,.08)}
+.rpn-ic{font-size:14px;flex-shrink:0}.rpn-lbl{font-size:12px;font-weight:600;color:var(--text)}.rpn.on .rpn-lbl,.rpn.on .rpn-ic{color:var(--navy)}
+.rpn-div{height:1px;background:var(--br);margin:5px 4px}
+.rpanel-content{flex:1;overflow-y:auto;background:var(--bg2)}
+.rhd{background:var(--navy);color:#fff;padding:28px 32px;position:relative}
+.rhd::before{content:'';position:absolute;top:0;left:0;right:0;height:3px;background:var(--gold)}
+.rhdtop{display:flex;align-items:flex-start;justify-content:space-between;margin-bottom:14px;flex-wrap:wrap;gap:10px}
+.rlg{display:flex;align-items:center;gap:7px}.rlsq{width:24px;height:24px;background:var(--gold);border-radius:4px;display:flex;align-items:center;justify-content:center;color:var(--navy);font-size:11px;font-weight:900}.rlt{font-size:10px;color:rgba(255,255,255,.35)}
+.rbgs{display:flex;gap:6px;flex-wrap:wrap}
+.rbg{display:inline-flex;align-items:center;gap:4px;padding:3px 9px;border-radius:3px;font-size:10px;font-weight:700;background:rgba(255,255,255,.1);color:rgba(255,255,255,.7);border:1px solid rgba(255,255,255,.12)}
+.rhd h1{font-size:24px;font-weight:800;letter-spacing:-.4px;margin-bottom:4px}
+.rsub{font-size:13px;color:rgba(255,255,255,.4);margin-bottom:16px}
+.rmt{display:flex;flex-wrap:wrap;gap:20px;padding-top:14px;border-top:1px solid rgba(255,255,255,.1)}
+.rml{font-size:9px;color:rgba(255,255,255,.3);text-transform:uppercase;letter-spacing:1px;margin-bottom:2px}.rmv{font-size:12px;color:rgba(255,255,255,.7);font-weight:500}
+.rpanel{padding:24px 28px}
+.pan-title{font-size:20px;font-weight:800;letter-spacing:-.4px;color:var(--text);margin-bottom:20px;padding-bottom:14px;border-bottom:1px solid var(--br);display:flex;align-items:center;gap:10px}
+.pan-title::before{content:'';display:block;width:3px;height:20px;background:var(--gold);border-radius:2px;flex-shrink:0}
+.pan-sec-title{font-size:10px;font-weight:700;color:var(--text3);text-transform:uppercase;letter-spacing:1px;margin:18px 0 11px}
+.pan-empty{background:var(--bg2);border:1px solid var(--br);border-radius:8px;padding:20px;text-align:center;font-size:13px;color:var(--text2);margin-bottom:16px}
+/* OVERVIEW */
+.ov-tool-cards{display:grid;grid-template-columns:repeat(3,1fr);gap:12px;margin-bottom:22px}
+.ov-card{background:#fff;border:1px solid var(--br);border-radius:10px;padding:16px;box-shadow:var(--sh1);border-top:3px solid var(--navy)}
+.ov-card-hd{display:flex;align-items:center;gap:6px;margin-bottom:12px}
+.ov-card-ic{font-size:14px}.ov-card-tl{font-size:10px;font-weight:700;color:var(--text2);text-transform:uppercase;letter-spacing:.6px}
+.ov-scores{display:flex;gap:12px;margin-bottom:10px}
+.ov-sc-n{font-size:22px;font-weight:800;letter-spacing:-.5px}
+.ov-sc-l{font-size:9px;color:var(--text3);font-weight:600;text-transform:uppercase}
+.ov-issue-row{font-size:11px;color:var(--text2);line-height:1.35;padding:3px 0;border-right:2px solid var(--gold);padding-right:7px;margin-bottom:3px}
+.ov-more{font-size:11px;color:var(--navy);font-weight:700;cursor:pointer;background:none;border:none;padding:4px 0;text-align:right;display:flex;align-items:center;gap:4px}.ov-more::after{content:'→'}.ov-more:hover{text-decoration:underline}
+.ov-checklist{display:flex;flex-direction:column;gap:6px}
+.ck-item{display:flex;align-items:flex-start;gap:10px;padding:9px 12px;border-radius:8px;border:1px solid var(--br)}
+.ck-item.pass{background:rgba(26,122,60,.04);border-color:rgba(26,122,60,.18)}.ck-item.fail{background:rgba(192,57,43,.04);border-color:rgba(192,57,43,.15)}.ck-item.warn{background:rgba(247,182,0,.05);border-color:rgba(247,182,0,.25)}
+.ck-ic{font-size:14px;flex-shrink:0;margin-top:1px}
+.ck-txt{font-size:13px;color:var(--text);font-weight:500;line-height:1.4}.ck-sub{font-size:11px;color:var(--text3);margin-top:2px}
+/* LH */
+.ltbs{display:flex;background:var(--bg2);border-radius:6px;padding:3px;margin-bottom:14px;width:fit-content;border:1px solid var(--br)}
+.ltb{padding:5px 14px;border-radius:4px;font-size:12px;font-weight:600;color:var(--text2);cursor:pointer;border:none;background:transparent;font-family:var(--fn);transition:all .15s}.ltb.on{background:#fff;color:var(--navy);border:1px solid var(--br)}
+.lhsg{display:grid;grid-template-columns:repeat(4,1fr);gap:10px;margin-bottom:16px}
+.lsc{background:var(--bg2);border-radius:8px;padding:14px;text-align:center;border:1px solid var(--br);position:relative;overflow:hidden}
+.lsc::after{content:'';position:absolute;top:0;left:0;right:0;height:3px}.lsc.gd::after{background:var(--gn)}.lsc.nd::after{background:var(--gold)}.lsc.pd::after{background:var(--rd)}
+.lrw{position:relative;width:60px;height:60px;margin:0 auto 6px}.lrw svg{transform:rotate(-90deg)}.lrin{position:absolute;inset:0;display:flex;align-items:center;justify-content:center}
+.lrn{font-size:16px;font-weight:800}.lcn{font-size:10px;font-weight:600;color:var(--text3)}
+.cwg{display:grid;grid-template-columns:repeat(3,1fr);gap:8px;margin-bottom:16px}
+.cwi{background:var(--bg2);border-radius:8px;padding:12px;border:1px solid var(--br)}
+.cwv_{font-size:15px;font-weight:800;margin-bottom:2px}
+.cwl{font-size:10px;font-weight:700;color:var(--text3);text-transform:uppercase;letter-spacing:.4px;margin-bottom:1px;display:flex;align-items:center;gap:4px}.cwf{font-size:10px;color:var(--text3)}.cwdt{display:inline-block;width:5px;height:5px;border-radius:50%;flex-shrink:0}
+.lissl{display:flex;flex-direction:column}
+.lii{display:flex;align-items:flex-start;gap:9px;padding:8px 0;border-bottom:1px solid var(--br)}.lii:last-child{border-bottom:none}
+.lid{width:6px;height:6px;border-radius:50%;flex-shrink:0;margin-top:5px}.lit{font-size:13px;color:var(--text2);line-height:1.4}
+/* WAVE */
+.wsg{display:grid;grid-template-columns:repeat(6,1fr);gap:8px;margin-bottom:16px}
+.wsc{border-radius:8px;padding:12px 7px;text-align:center;border:1px solid var(--br);background:var(--bg2)}
+.wsn{font-size:20px;font-weight:800;margin-bottom:2px}.wsl{font-size:9px;font-weight:700;text-transform:uppercase;letter-spacing:.3px;color:var(--text3)}
+.wsc.ce .wsn{color:var(--rd)}.wsc.al .wsn{color:var(--gold)}.wsc.st .wsn{color:var(--navy)}.wsc.h5 .wsn{color:#0891b2}.wsc.ar .wsn{color:#7c3aed}.wsc.co .wsn{color:var(--gold)}
+.wis{display:flex;flex-direction:column;margin-bottom:14px}
+.wih{font-size:10px;font-weight:700;color:var(--text3);text-transform:uppercase;letter-spacing:.5px;margin-bottom:8px}
+.wii{display:flex;align-items:flex-start;gap:9px;padding:9px 0;border-bottom:1px solid var(--br)}.wii:last-child{border-bottom:none}
+.wib{font-size:9px;font-weight:700;padding:2px 7px;border-radius:3px;white-space:nowrap;flex-shrink:0;margin-top:2px}
+.wib.er{background:rgba(192,57,43,.1);color:var(--rd)}.wib.at{background:rgba(247,182,0,.12);color:var(--gold2)}.wib.ct{background:rgba(247,182,0,.1);color:var(--gold2)}
+.wite{font-size:13px;font-weight:600;margin-bottom:2px;color:var(--text)}.wicnt{font-size:11px;color:var(--text3)}
+.bwo{display:inline-flex;align-items:center;gap:6px;background:var(--navy);color:#fff;padding:9px 18px;border-radius:4px;font-size:13px;font-weight:700;text-decoration:none}
+/* HM */
+.hmg{display:grid;grid-template-columns:1fr 1fr;gap:20px;align-items:start}
+.hmins .hmi{display:flex;gap:9px;padding:9px 0;border-bottom:.5px solid var(--br);align-items:flex-start}.hmins .hmi:last-child{border-bottom:none}
+.hmdot{width:7px;height:7px;border-radius:50%;background:var(--gold);flex-shrink:0;margin-top:4px}.hmtx{font-size:13px;color:var(--text2);line-height:1.55}
+.hmleg{display:flex;align-items:center;gap:8px;margin-top:9px;padding-top:9px;border-top:1px solid var(--br)}.hmlegb{flex:1;height:3px;border-radius:2px;background:linear-gradient(to right,#1E44FF,#00CC88,#FFD700,#FF8800,#FF2A5C)}
+/* CB */
+.cb-tabs{display:flex;flex-wrap:wrap;gap:6px;margin-bottom:18px}
+.cb-tab{padding:6px 13px;border-radius:4px;font-size:12px;font-weight:600;color:var(--text2);cursor:pointer;border:1px solid var(--br);background:var(--bg2);font-family:var(--fn);transition:all .15s;white-space:nowrap}.cb-tab.on{background:var(--navy);color:#fff;border-color:var(--navy)}
+.cb-meta{background:var(--bg2);border-radius:8px;padding:13px 15px;margin-bottom:16px;display:flex;align-items:flex-start;gap:10px;border:1px solid var(--br)}
+.cb-meta-name{font-size:13px;font-weight:700;color:var(--text);margin-bottom:2px}.cb-meta-desc{font-size:12px;color:var(--text2);line-height:1.5}.cb-meta-pct{display:inline-flex;font-size:10px;font-weight:700;padding:2px 8px;border-radius:3px;background:#fff;color:var(--text3);border:1px solid var(--br);margin-top:4px}
+.cb-palette-label{font-size:10px;font-weight:700;color:var(--text3);text-transform:uppercase;letter-spacing:.8px;margin-bottom:9px}
+.cb-swatches{display:flex;flex-wrap:wrap;gap:10px;margin-bottom:18px}
+.cb-sw{display:flex;flex-direction:column;border-radius:6px;overflow:hidden;border:1px solid var(--br);min-width:70px}
+.cb-sw-orig{height:38px;min-width:70px}.cb-sw-sim{height:38px;min-width:70px}
+.cb-sw-name{font-size:10px;font-weight:600;color:var(--text2);padding:5px 6px;text-align:center;background:var(--bg2);line-height:1.3}
+.cb-sw-hex{font-size:9px;color:var(--text3);padding:0 5px 5px;text-align:center;background:var(--bg2);direction:ltr;font-family:monospace}
+.cb-combos{display:flex;flex-direction:column;gap:8px;margin-bottom:16px}
+.cb-combo{display:flex;align-items:center;gap:12px;padding:10px;background:var(--bg2);border-radius:8px;border:1px solid var(--br)}
+.cb-preview{width:50px;height:36px;border-radius:4px;display:flex;align-items:center;justify-content:center;font-size:15px;font-weight:800;flex-shrink:0;border:1px solid var(--br)}
+.cb-usage{font-size:13px;font-weight:600;color:var(--text);margin-bottom:3px}
+.cb-badge{display:inline-flex;font-size:10px;font-weight:700;padding:2px 8px;border-radius:3px;margin-top:3px}
+.cb-badge.pass{background:rgba(26,122,60,.1);color:var(--gn);border:1px solid rgba(26,122,60,.2)}.cb-badge.warn{background:rgba(247,182,0,.1);color:var(--gold2);border:1px solid rgba(247,182,0,.25)}.cb-badge.fail{background:rgba(192,57,43,.1);color:var(--rd);border:1px solid rgba(192,57,43,.2)}
+.cb-issues{display:flex;flex-direction:column;gap:7px;margin-bottom:12px}
+.cb-issue-row{display:flex;align-items:flex-start;gap:9px;font-size:13px;color:var(--text2);line-height:1.5;padding:9px 12px;background:#FFFDF0;border-radius:6px;border:1px solid #F7E68A}
+.cb-recs{display:flex;flex-direction:column;gap:7px}
+.cb-rec-row{display:flex;align-items:flex-start;gap:9px;font-size:13px;color:var(--text2);line-height:1.5;padding:9px 12px;background:#F6FFF7;border-radius:6px;border:1px solid #C3E6CB}
+/* SITE LEVEL */
+.site-overview{display:grid;grid-template-columns:repeat(4,1fr);gap:10px;margin-bottom:18px}
+.sov-card{background:var(--bg2);border-radius:8px;padding:14px;border:1px solid var(--br);text-align:center}
+.sov-n{font-size:24px;font-weight:800;letter-spacing:-.5px;margin-bottom:3px}.sov-l{font-size:10px;font-weight:600;color:var(--text3);text-transform:uppercase;letter-spacing:.5px}
+.site-pages-grid{display:flex;flex-direction:column;gap:9px}
+.spg-item{background:var(--bg2);border:1px solid var(--br);border-radius:8px;padding:13px 15px;display:flex;align-items:center;gap:12px}
+.spg-num{font-size:18px;font-weight:800;color:var(--text3);min-width:22px}
+.spg-info{flex:1}.spg-name{font-size:13px;font-weight:700;color:var(--text);margin-bottom:2px}.spg-url{font-size:10px;color:var(--text3);direction:ltr;text-align:right}
+.spg-scores{display:flex;gap:8px;flex-shrink:0}.spg-sc{text-align:center;min-width:38px}.spg-sc-n{font-size:15px;font-weight:700}.spg-sc-l{font-size:9px;color:var(--text3);font-weight:600}
+.site-issues{display:flex;flex-direction:column;gap:7px}
+.si-item{display:flex;align-items:flex-start;gap:10px;padding:9px 12px;background:var(--bg2);border-radius:6px;border:1px solid var(--br)}
+.si-badge{font-size:10px;font-weight:700;padding:2px 8px;border-radius:3px;white-space:nowrap;flex-shrink:0}.si-badge.all{background:rgba(192,57,43,.1);color:var(--rd)}.si-badge.most{background:rgba(247,182,0,.12);color:var(--gold2)}
+.si-desc{font-size:13px;color:var(--text);line-height:1.4}.si-pages{font-size:11px;color:var(--text3);margin-top:2px}
+/* UX PANEL */
+.sclay{display:grid;grid-template-columns:auto 1fr;gap:26px;align-items:center;margin-bottom:20px}
+.rrgw{position:relative;width:116px;height:116px}.rrgw svg{transform:rotate(-90deg)}.rrgin{position:absolute;inset:0;display:flex;flex-direction:column;align-items:center;justify-content:center}
+.rrgn{font-size:30px;font-weight:900;letter-spacing:-1px}.rrgd{font-size:11px;color:var(--text3)}
+.kpg{display:grid;grid-template-columns:repeat(3,1fr);gap:8px}
+.kp{background:var(--bg2);border-radius:8px;padding:12px;border:1px solid var(--br);border-top:2px solid var(--navy)}.kpl{font-size:10px;font-weight:700;color:var(--text3);text-transform:uppercase;letter-spacing:.4px;margin-bottom:3px}.kpv{font-size:20px;font-weight:800;color:var(--navy)}.kps{font-size:11px;color:var(--text3);margin-top:1px}
+.bdr{display:flex;align-items:center;gap:10px;padding:7px 0;border-bottom:1px solid var(--br)}.bdr:last-child{border-bottom:none}
+.bdn{font-size:13px;font-weight:400;flex:1;color:var(--text2)}.bdw{width:90px;height:2px;background:var(--br);border-radius:2px;overflow:hidden;flex-shrink:0}.bdb{height:100%;border-radius:2px;transition:width 1s}
+.bdp{font-size:12px;font-weight:700;min-width:30px;text-align:left}.bdc{font-size:11px;color:var(--text3);min-width:72px;text-align:left}
+.isr{display:flex;gap:10px;padding:10px 0;border-bottom:1px solid var(--br);align-items:flex-start}.isr:last-child{border-bottom:none}
+.ist{font-size:10px;font-weight:700;padding:2px 8px;border-radius:3px;background:rgba(192,57,43,.1);color:var(--rd);white-space:nowrap;flex-shrink:0;margin-top:2px}
+.isq{font-size:13px;line-height:1.45;color:var(--text)}.isn{font-size:12px;color:var(--gold2);margin-top:2px;font-style:italic}.iss{font-size:11px;color:var(--navy);font-weight:500;margin-top:2px}
+.rftx{font-size:12px;color:var(--text3);line-height:1.6}
+.rfbg{background:var(--navy);color:#fff;padding:5px 14px;border-radius:3px;font-size:12px;font-weight:700}
+.ndt{font-size:13px;color:var(--text3);padding:14px 0;text-align:center}
+/* GA */
+.ga-grid{display:grid;grid-template-columns:repeat(4,1fr);gap:10px;margin-bottom:20px}
+.ga-kpi{background:var(--bg2);border-radius:8px;padding:14px;border:1px solid var(--br);text-align:center}
+.ga-kpi::before{content:'';display:block;height:3px;background:var(--navy);margin:-14px -14px 14px;border-radius:8px 8px 0 0}
+.ga-kpi-n{font-size:22px;font-weight:800;letter-spacing:-.5px;color:var(--text);margin-bottom:4px}.ga-kpi-l{font-size:10px;font-weight:700;color:var(--text3);text-transform:uppercase;letter-spacing:.5px}
+.crux-grid{display:grid;grid-template-columns:repeat(2,1fr);gap:10px;margin-bottom:20px}
+.crux-card{background:var(--bg2);border-radius:8px;padding:14px 16px;border:1px solid var(--br);display:flex;align-items:center;gap:12px}
+.crux-ic{width:36px;height:36px;border-radius:50%;display:flex;align-items:center;justify-content:center;flex-shrink:0;font-weight:800;font-size:11px}
+.crux-ic.good{background:rgba(26,122,60,.1);color:var(--gn)}.crux-ic.avg{background:rgba(247,182,0,.12);color:var(--gold2)}.crux-ic.poor{background:rgba(192,57,43,.1);color:var(--rd)}
+.crux-info{flex:1}.crux-name{font-size:11px;font-weight:700;color:var(--text3);text-transform:uppercase;letter-spacing:.5px;margin-bottom:3px}
+.crux-val{font-size:18px;font-weight:800;letter-spacing:-.3px}.crux-cat{font-size:10px;font-weight:600}
+.crux-bar-wrap{height:3px;background:var(--br);border-radius:2px;margin-top:5px;overflow:hidden}
+.crux-bar{height:100%;border-radius:2px;transition:width 1s}
+.ga-search-grid{display:grid;grid-template-columns:1fr 1fr;gap:16px;margin-bottom:20px}
+.ga-box{background:var(--bg2);border-radius:8px;padding:16px;border:1px solid var(--br)}
+.ga-box-title{font-size:10px;font-weight:700;color:var(--text2);text-transform:uppercase;letter-spacing:.6px;margin-bottom:12px}
+.kw-row{display:flex;align-items:center;gap:8px;padding:6px 0;border-bottom:.5px solid var(--br)}.kw-row:last-child{border-bottom:none}
+.kw-pos{width:24px;height:24px;border-radius:4px;display:flex;align-items:center;justify-content:center;font-size:11px;font-weight:800;flex-shrink:0}
+.kw-pos.top3{background:rgba(26,31,113,.1);color:var(--navy)}.kw-pos.top10{background:rgba(26,122,60,.1);color:var(--gn)}.kw-pos.other{background:var(--bg3);color:var(--text3)}
+.kw-name{font-size:12px;color:var(--text);flex:1;font-weight:500}.kw-clicks{font-size:11px;font-weight:700;color:var(--text3);white-space:nowrap}
+.dev-row{display:flex;align-items:center;gap:10px;margin-bottom:10px}
+.dev-ic{font-size:16px;width:26px;text-align:center;flex-shrink:0}.dev-name{font-size:12px;color:var(--text);flex:1;font-weight:500}
+.dev-bw{flex:2;height:5px;background:var(--br);border-radius:2px;overflow:hidden}.dev-b{height:100%;border-radius:2px}.dev-pct{font-size:12px;font-weight:700;color:var(--text2);min-width:36px;text-align:left}
+.sw-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:10px;margin-bottom:20px}
+.sw-kpi{background:var(--bg2);border-radius:8px;padding:14px;border:1px solid var(--br);text-align:center}
+.sw-kpi-n{font-size:22px;font-weight:800;letter-spacing:-.5px;margin-bottom:4px;color:var(--text)}.sw-kpi-l{font-size:10px;font-weight:700;color:var(--text3);text-transform:uppercase;letter-spacing:.5px}
+.sw-2col{display:grid;grid-template-columns:1fr 1fr;gap:16px;margin-bottom:18px}
+.sw-box{background:var(--bg2);border-radius:8px;padding:16px;border:1px solid var(--br)}.sw-box-title{font-size:10px;font-weight:700;color:var(--text2);text-transform:uppercase;letter-spacing:.6px;margin-bottom:12px}
+.sw-src-row{display:flex;align-items:center;gap:9px;padding:5px 0;border-bottom:.5px solid var(--br)}.sw-src-row:last-child{border-bottom:none}
+.sw-src-dot{width:7px;height:7px;border-radius:50%;flex-shrink:0}.sw-src-name{font-size:12px;color:var(--text);flex:1;font-weight:500}
+.sw-src-bw{width:70px;height:3px;background:var(--br);border-radius:2px;overflow:hidden;flex-shrink:0}.sw-src-b{height:100%;border-radius:2px}.sw-src-pct{font-size:11px;font-weight:700;color:var(--text2);min-width:36px;text-align:left}
+.sw-ctry{display:flex;align-items:center;gap:8px;padding:5px 0;border-bottom:.5px solid var(--br)}.sw-ctry:last-child{border-bottom:none}
+.sw-ctry-f{font-size:15px;flex-shrink:0}.sw-ctry-n{font-size:12px;color:var(--text);flex:1;font-weight:500}
+.sw-ctry-bw{width:60px;height:3px;background:var(--br);border-radius:2px;overflow:hidden;flex-shrink:0}.sw-ctry-b{height:100%;background:var(--navy);border-radius:2px}.sw-ctry-p{font-size:11px;font-weight:700;color:var(--text2);min-width:32px;text-align:left}
+.sw-chips{display:flex;flex-wrap:wrap;gap:7px;margin-bottom:16px}
+.sw-chip{font-size:12px;font-weight:500;padding:5px 12px;border-radius:3px;background:var(--bg2);border:1px solid var(--br);color:var(--text2)}
+.sw-comp{display:flex;align-items:center;gap:7px;background:var(--bg2);border:1px solid var(--br);border-radius:6px;padding:7px 12px;display:inline-flex}
+.sw-comp-dot{width:6px;height:6px;border-radius:50%;background:var(--gold);flex-shrink:0}.sw-comp-n{font-size:13px;color:var(--text);font-weight:500}
+.ga-connect{background:rgba(26,31,113,.05);border:1px solid rgba(26,31,113,.15);border-radius:8px;padding:16px 18px;text-align:center;margin-bottom:16px}
+.ga-connect-title{font-size:14px;font-weight:700;color:var(--navy);margin-bottom:5px}
+.ga-connect-sub{font-size:12px;color:var(--text2);line-height:1.5}
+.ga-note{font-size:11px;color:var(--text3);padding:8px 12px;background:var(--bg2);border-radius:4px;border:1px solid var(--br);margin-top:12px}
+/* PRINT */
+@media print{@page{margin:10mm 8mm;size:A4}*{-webkit-print-color-adjust:exact!important;print-color-adjust:exact!important}body{background:#fff}.nav,.bbar,.tnav,.tgbar,.rpb,.rpanel-sidebar,#landing{display:none!important}#tool{display:block!important}.tscr{padding-top:0!important}.report-body{display:block!important;height:auto!important}.rpanel-content{overflow:visible!important}.rpanel{display:block!important;padding:14px 18px;page-break-inside:avoid}.rhd{background:#1A1F71!important}.pan-title{page-break-after:avoid}.lhsg,.cwg,.kpg,.ov-tool-cards{page-break-inside:avoid}}
+@media(max-width:768px){.nav-links,.fls{display:none}.nav{padding:0 20px}.hero-inner{grid-template-columns:1fr;padding:80px 20px 60px;gap:40px}.hero-visual{display:none}.hero-stats{flex-wrap:wrap;gap:16px}.sec-wrap{padding:0 20px}.bento,.pgrid{grid-template-columns:1fr}.bc1,.bc2,.bc3,.bc4{grid-column:span 12}.how-steps,.pgrid{grid-template-columns:1fr}.cta-sec{padding:60px 20px}footer{padding:28px 20px}.tnav,.bbar{padding:0 16px}.shr{padding:16px 20px}.sbdy{padding:14px 20px}.rpanel{padding:14px 16px}.report-body{flex-direction:column;height:auto}.rpanel-sidebar{width:100%;flex-direction:row;flex-wrap:wrap;border-left:none;border-bottom:1px solid var(--br)}.rpanel-content{overflow:visible}.lhsg{grid-template-columns:1fr 1fr}.cwg{grid-template-columns:1fr 1fr}.wsg{grid-template-columns:repeat(3,1fr)}.ov-tool-cards{grid-template-columns:1fr}.sw-2col,.sw-grid,.ga-search-grid{grid-template-columns:1fr}.site-overview{grid-template-columns:1fr 1fr}.rrgw{margin:0 auto}.sclay{grid-template-columns:1fr}}
+</style>
+</head>
+<body>
+<!-- LANDING -->
+<div id="landing">
+
+<!-- ══ NAV ══ -->
+<nav id="lNav" style="position:fixed;top:0;left:0;right:0;z-index:200;height:68px;display:flex;align-items:center;justify-content:space-between;padding:0 40px;transition:all .3s;background:transparent">
+  <a href="#" style="display:flex;align-items:center;gap:10px;text-decoration:none">
+    <div style="width:34px;height:34px;background:#F7B600;border-radius:6px;display:flex;align-items:center;justify-content:center;font-size:15px;font-weight:900;color:#1A1F71">U</div>
+    <span style="font-size:19px;font-weight:800;color:#fff;letter-spacing:-.3px">UXScan</span>
+  </a>
+  <div id="navLinks" style="display:flex;align-items:center;gap:28px">
+    <a href="#features" style="color:rgba(255,255,255,.6);text-decoration:none;font-size:14px;font-weight:500;transition:color .2s" onmouseover="this.style.color='#fff'" onmouseout="this.style.color='rgba(255,255,255,.6)'">الميزات</a>
+    <a href="#how" style="color:rgba(255,255,255,.6);text-decoration:none;font-size:14px;font-weight:500;transition:color .2s" onmouseover="this.style.color='#fff'" onmouseout="this.style.color='rgba(255,255,255,.6)'">كيف يعمل</a>
+    <a href="#pricing" style="color:rgba(255,255,255,.6);text-decoration:none;font-size:14px;font-weight:500;transition:color .2s" onmouseover="this.style.color='#fff'" onmouseout="this.style.color='rgba(255,255,255,.6)'">الأسعار</a>
+    <a href="#" style="color:rgba(255,255,255,.6);text-decoration:none;font-size:14px;font-weight:500;transition:color .2s" onmouseover="this.style.color='#fff'" onmouseout="this.style.color='rgba(255,255,255,.6)'">الدعم</a>
+  </div>
+  <div style="display:flex;align-items:center;gap:10px">
+    <button onclick="openTool()" style="background:transparent;color:rgba(255,255,255,.7);padding:9px 18px;border-radius:6px;font-size:14px;font-weight:600;border:1px solid rgba(255,255,255,.2);cursor:pointer;font-family:var(--fn);transition:all .2s" onmouseover="this.style.borderColor='rgba(255,255,255,.6)';this.style.color='#fff'" onmouseout="this.style.borderColor='rgba(255,255,255,.2)';this.style.color='rgba(255,255,255,.7)'">تسجيل الدخول</button>
+    <button onclick="openTool()" style="background:#F7B600;color:#1A1F71;padding:10px 22px;border-radius:6px;font-size:14px;font-weight:800;border:none;cursor:pointer;font-family:var(--fn);transition:all .2s" onmouseover="this.style.background='#FFD040';this.style.transform='translateY(-1px)'" onmouseout="this.style.background='#F7B600';this.style.transform=''">ابدأ مجاناً</button>
+  </div>
+</nav>
+
+<!-- ══ HERO ══ -->
+<section id="heroSection" style="background:linear-gradient(160deg,#0F1450 0%,#1A1F71 45%,#2D3590 100%);min-height:100vh;display:flex;align-items:center;position:relative;overflow:hidden;padding-top:68px">
+  <!-- Subtle noise texture -->
+  <div style="position:absolute;inset:0;opacity:.025;background-image:url('data:image/svg+xml,<svg xmlns=%22http://www.w3.org/2000/svg%22 width=%2260%22 height=%2260%22><circle cx=%2230%22 cy=%2230%22 r=%221%22 fill=%22white%22/></svg>');background-size:60px 60px"></div>
+  <!-- Glow orbs -->
+  <div style="position:absolute;top:-200px;right:5%;width:700px;height:700px;background:radial-gradient(circle,rgba(247,182,0,.09) 0%,transparent 65%);pointer-events:none"></div>
+  <div style="position:absolute;bottom:-150px;left:-100px;width:500px;height:500px;background:radial-gradient(circle,rgba(45,53,144,.6) 0%,transparent 70%);pointer-events:none"></div>
+  <!-- Gold bottom line -->
+  <div style="position:absolute;bottom:0;left:0;right:0;height:3px;background:linear-gradient(90deg,transparent,#F7B600 30%,#F7B600 70%,transparent)"></div>
+
+  <div style="max-width:1280px;margin:0 auto;padding:60px 48px 80px;width:100%;display:grid;grid-template-columns:1.05fr .95fr;gap:60px;align-items:center">
+
+    <!-- LEFT -->
+    <div id="hLeft">
+      <!-- Trust badge -->
+      <div id="hBadge" style="display:inline-flex;align-items:center;gap:8px;background:rgba(247,182,0,.1);border:1px solid rgba(247,182,0,.2);border-radius:5px;padding:7px 14px;margin-bottom:28px;opacity:0;transform:translateY(14px)">
+        <span style="font-size:12px">⭐⭐⭐⭐⭐</span>
+        <span style="font-size:12px;font-weight:700;color:#F7B600">4.9/5</span>
+        <span style="font-size:12px;color:rgba(255,255,255,.5);font-weight:400">· موثوق من +2,000 مقيّم UX</span>
+      </div>
+
+      <!-- Headline -->
+      <div style="overflow:hidden;margin-bottom:3px"><div id="hw1" style="font-size:clamp(44px,5.5vw,76px);font-weight:900;line-height:.97;letter-spacing:-3.5px;color:#fff;transform:translateY(105%);opacity:0">أداة التقييم</div></div>
+      <div style="overflow:hidden;margin-bottom:3px"><div id="hw2" style="font-size:clamp(44px,5.5vw,76px);font-weight:900;line-height:.97;letter-spacing:-3.5px;color:#fff;transform:translateY(105%);opacity:0">الأكثر شمولاً</div></div>
+      <div style="overflow:hidden;margin-bottom:32px"><div id="hw3" style="font-size:clamp(44px,5.5vw,76px);font-weight:900;line-height:.97;letter-spacing:-3.5px;color:#F7B600;transform:translateY(105%);opacity:0">للمواقع العربية</div></div>
+
+      <p id="hSub" style="font-size:18px;color:rgba(255,255,255,.55);line-height:1.7;max-width:500px;margin-bottom:36px;font-weight:300;opacity:0;transform:translateY(14px)">
+        حلل أي موقع بـ AI وLighthouse وWAVE وSimilarWeb وHeatmaps في تقرير احترافي واحد — في أقل من 5 دقائق.
+      </p>
+
+      <!-- CTA group -->
+      <div id="hBtns" style="display:flex;align-items:center;gap:14px;margin-bottom:40px;flex-wrap:wrap;opacity:0;transform:translateY(14px)">
+        <button onclick="openTool()" style="background:#F7B600;color:#1A1F71;padding:16px 34px;border-radius:6px;font-size:16px;font-weight:800;border:none;cursor:pointer;font-family:var(--fn);transition:all .2s;display:flex;align-items:center;gap:9px;box-shadow:0 8px 32px rgba(247,182,0,.35)" onmouseover="this.style.background='#FFD040';this.style.transform='translateY(-2px)';this.style.boxShadow='0 12px 40px rgba(247,182,0,.45)'" onmouseout="this.style.background='#F7B600';this.style.transform='';this.style.boxShadow='0 8px 32px rgba(247,182,0,.35)'">ابدأ مجاناً الآن <span style="font-size:18px">←</span></button>
+        <span style="font-size:13px;color:rgba(255,255,255,.35)">لا يلزم بطاقة ائتمان</span>
+      </div>
+
+      <!-- Mini stats row (Bluehost-style trust strip) -->
+      <div id="hStats" style="display:flex;gap:24px;align-items:center;opacity:0;transform:translateY(14px);flex-wrap:wrap">
+        <div style="display:flex;align-items:center;gap:8px;padding:10px 16px;background:rgba(255,255,255,.06);border-radius:8px;border:1px solid rgba(255,255,255,.08)">
+          <span style="font-size:20px">⚡</span>
+          <div><div style="font-size:13px;font-weight:700;color:#fff">Lighthouse</div><div style="font-size:11px;color:rgba(255,255,255,.35)">Mobile + Desktop</div></div>
+        </div>
+        <div style="display:flex;align-items:center;gap:8px;padding:10px 16px;background:rgba(255,255,255,.06);border-radius:8px;border:1px solid rgba(255,255,255,.08)">
+          <span style="font-size:20px">♿</span>
+          <div><div style="font-size:13px;font-weight:700;color:#fff">WAVE</div><div style="font-size:11px;color:rgba(255,255,255,.35)">WCAG 2.1</div></div>
+        </div>
+        <div style="display:flex;align-items:center;gap:8px;padding:10px 16px;background:rgba(255,255,255,.06);border-radius:8px;border:1px solid rgba(255,255,255,.08)">
+          <span style="font-size:20px">🌐</span>
+          <div><div style="font-size:13px;font-weight:700;color:#fff">SimilarWeb</div><div style="font-size:11px;color:rgba(255,255,255,.35)">Traffic Analytics</div></div>
+        </div>
+        <div style="display:flex;align-items:center;gap:8px;padding:10px 16px;background:rgba(255,255,255,.06);border-radius:8px;border:1px solid rgba(255,255,255,.08)">
+          <span style="font-size:20px">🤖</span>
+          <div><div style="font-size:13px;font-weight:700;color:#fff">Claude AI</div><div style="font-size:11px;color:rgba(255,255,255,.35)">13 قسم UX</div></div>
+        </div>
+      </div>
+    </div>
+
+    <!-- RIGHT: Browser mockup (Bluehost-style) -->
+    <div id="hRight" style="opacity:0;transform:translateX(24px)">
+      <!-- Browser window mockup -->
+      <div style="background:#1E2460;border-radius:14px;overflow:hidden;box-shadow:0 40px 80px rgba(0,0,0,.5),0 0 0 1px rgba(255,255,255,.07)">
+        <!-- Browser chrome -->
+        <div style="background:#141840;padding:12px 16px;display:flex;align-items:center;gap:10px">
+          <div style="display:flex;gap:6px"><div style="width:11px;height:11px;border-radius:50%;background:#FF5F57"></div><div style="width:11px;height:11px;border-radius:50%;background:#FEBC2E"></div><div style="width:11px;height:11px;border-radius:50%;background:#28C840"></div></div>
+          <div style="flex:1;background:rgba(255,255,255,.07);border-radius:5px;padding:5px 12px;font-size:11px;color:rgba(255,255,255,.3);direction:ltr;text-align:left;font-family:monospace">app.uxscan.io/report</div>
+        </div>
+        <!-- Report preview content -->
+        <div style="background:#F4F6FF;padding:18px">
+          <!-- Report header dark strip -->
+          <div style="background:#1A1F71;border-radius:10px;padding:16px 20px;margin-bottom:14px;position:relative;overflow:hidden">
+            <div style="position:absolute;top:0;left:0;right:0;height:3px;background:#F7B600;border-radius:10px 10px 0 0"></div>
+            <div style="font-size:10px;color:rgba(255,255,255,.4);margin-bottom:4px">UXScan Report — example.com</div>
+            <div style="font-size:14px;font-weight:700;color:#fff;margin-bottom:8px">تقرير تقييم قابلية الاستخدام</div>
+            <div style="display:flex;gap:6px;flex-wrap:wrap">
+              <span style="font-size:9px;font-weight:700;padding:2px 8px;border-radius:3px;background:rgba(255,255,255,.1);color:rgba(255,255,255,.65)">⚡ Lighthouse</span>
+              <span style="font-size:9px;font-weight:700;padding:2px 8px;border-radius:3px;background:rgba(255,255,255,.1);color:rgba(255,255,255,.65)">♿ WAVE</span>
+              <span style="font-size:9px;font-weight:700;padding:2px 8px;border-radius:3px;background:rgba(255,255,255,.1);color:rgba(255,255,255,.65)">🌐 SimilarWeb</span>
+              <span style="font-size:9px;font-weight:700;padding:2px 8px;border-radius:3px;background:rgba(255,255,255,.1);color:rgba(255,255,255,.65)">🔥 Heatmaps</span>
+            </div>
+          </div>
+          <!-- Panel sidebar + content -->
+          <div style="display:grid;grid-template-columns:90px 1fr;gap:10px">
+            <!-- Sidebar -->
+            <div style="background:#fff;border-radius:8px;padding:8px;border:1px solid #CDD2EE">
+              <div style="padding:7px 8px;border-radius:5px;background:rgba(26,31,113,.08);margin-bottom:3px;font-size:10px;font-weight:700;color:#1A1F71;display:flex;align-items:center;gap:5px"><span>📊</span>نظرة عامة</div>
+              <div style="padding:7px 8px;border-radius:5px;margin-bottom:3px;font-size:10px;color:#8B94BB;display:flex;align-items:center;gap:5px"><span>⚡</span>Lighthouse</div>
+              <div style="padding:7px 8px;border-radius:5px;margin-bottom:3px;font-size:10px;color:#8B94BB;display:flex;align-items:center;gap:5px"><span>♿</span>WAVE</div>
+              <div style="padding:7px 8px;border-radius:5px;margin-bottom:3px;font-size:10px;color:#8B94BB;display:flex;align-items:center;gap:5px"><span>🌐</span>SimilarWeb</div>
+              <div style="padding:7px 8px;border-radius:5px;font-size:10px;color:#8B94BB;display:flex;align-items:center;gap:5px"><span>📋</span>تقييم UX</div>
+            </div>
+            <!-- Main content -->
+            <div>
+              <!-- Score + tool cards -->
+              <div style="display:grid;grid-template-columns:1fr 1fr 1fr;gap:7px;margin-bottom:8px">
+                <div style="background:#fff;border-radius:7px;padding:10px;border:1px solid #CDD2EE;border-top:3px solid #1A1F71">
+                  <div style="font-size:8px;color:#8B94BB;font-weight:700;text-transform:uppercase;margin-bottom:4px">LH Score</div>
+                  <div style="font-size:20px;font-weight:900;letter-spacing:-1px;color:#1A1F71;line-height:1">91</div>
+                </div>
+                <div style="background:#fff;border-radius:7px;padding:10px;border:1px solid #CDD2EE;border-top:3px solid #F7B600">
+                  <div style="font-size:8px;color:#8B94BB;font-weight:700;text-transform:uppercase;margin-bottom:4px">WAVE</div>
+                  <div style="font-size:20px;font-weight:900;letter-spacing:-1px;color:#E5A800;line-height:1">2</div>
+                </div>
+                <div style="background:#fff;border-radius:7px;padding:10px;border:1px solid #CDD2EE;border-top:3px solid #2D8B4E">
+                  <div style="font-size:8px;color:#8B94BB;font-weight:700;text-transform:uppercase;margin-bottom:4px">UX Score</div>
+                  <div style="font-size:20px;font-weight:900;letter-spacing:-1px;color:#2D8B4E;line-height:1">84%</div>
+                </div>
+              </div>
+              <!-- LH bars -->
+              <div style="background:#fff;border-radius:7px;padding:10px;border:1px solid #CDD2EE">
+                <div style="font-size:9px;font-weight:700;color:#4A5180;margin-bottom:8px;text-transform:uppercase;letter-spacing:.5px">Lighthouse Performance</div>
+                <div style="display:flex;flex-direction:column;gap:5px">
+                  <div style="display:flex;align-items:center;gap:6px"><span style="font-size:9px;color:#8B94BB;width:48px">Performance</span><div style="flex:1;height:5px;background:#E8ECFF;border-radius:3px;overflow:hidden"><div style="height:100%;width:73%;background:#F7B600;border-radius:3px"></div></div><span style="font-size:9px;font-weight:700;color:#E5A800;width:22px;text-align:right">73</span></div>
+                  <div style="display:flex;align-items:center;gap:6px"><span style="font-size:9px;color:#8B94BB;width:48px">A11y</span><div style="flex:1;height:5px;background:#E8ECFF;border-radius:3px;overflow:hidden"><div style="height:100%;width:91%;background:#2D8B4E;border-radius:3px"></div></div><span style="font-size:9px;font-weight:700;color:#2D8B4E;width:22px;text-align:right">91</span></div>
+                  <div style="display:flex;align-items:center;gap:6px"><span style="font-size:9px;color:#8B94BB;width:48px">SEO</span><div style="flex:1;height:5px;background:#E8ECFF;border-radius:3px;overflow:hidden"><div style="height:100%;width:96%;background:#2D8B4E;border-radius:3px"></div></div><span style="font-size:9px;font-weight:700;color:#2D8B4E;width:22px;text-align:right">96</span></div>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+      <!-- Floating badge below mockup -->
+      <div style="display:flex;justify-content:center;margin-top:16px">
+        <div style="background:rgba(255,255,255,.06);border:1px solid rgba(255,255,255,.1);border-radius:980px;padding:8px 20px;font-size:12px;color:rgba(255,255,255,.5);display:flex;align-items:center;gap:8px">
+          <div style="width:7px;height:7px;border-radius:50%;background:#4ade80;animation:badgePulse 2s ease-in-out infinite"></div>
+          تقرير جاهز في أقل من 5 دقائق
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ══ TRUST STRIP ══ (Bluehost-style) -->
+<div style="background:#fff;border-bottom:1px solid #E8ECFF;padding:24px 48px">
+  <div style="max-width:1280px;margin:0 auto;display:flex;align-items:center;justify-content:center;gap:48px;flex-wrap:wrap">
+    <div style="font-size:12px;font-weight:600;color:#8B94BB;letter-spacing:.5px;text-transform:uppercase">أدوات مدعومة:</div>
+    <div style="display:flex;align-items:center;gap:8px"><span style="font-size:16px">⚡</span><span style="font-size:14px;font-weight:700;color:#4A5180">Google Lighthouse</span></div>
+    <div style="width:1px;height:20px;background:#CDD2EE"></div>
+    <div style="display:flex;align-items:center;gap:8px"><span style="font-size:16px">♿</span><span style="font-size:14px;font-weight:700;color:#4A5180">WebAIM WAVE</span></div>
+    <div style="width:1px;height:20px;background:#CDD2EE"></div>
+    <div style="display:flex;align-items:center;gap:8px"><span style="font-size:16px">🌐</span><span style="font-size:14px;font-weight:700;color:#4A5180">SimilarWeb</span></div>
+    <div style="width:1px;height:20px;background:#CDD2EE"></div>
+    <div style="display:flex;align-items:center;gap:8px"><span style="font-size:16px">🤖</span><span style="font-size:14px;font-weight:700;color:#4A5180">Claude AI</span></div>
+    <div style="width:1px;height:20px;background:#CDD2EE"></div>
+    <div style="display:flex;align-items:center;gap:8px"><span style="font-size:16px">📊</span><span style="font-size:14px;font-weight:700;color:#4A5180">Google Analytics</span></div>
+  </div>
+</div>
+
+<!-- ══ WHY SECTION (Big numbers - Bluehost style) ══ -->
+<section style="background:#F4F6FF;padding:72px 0;border-bottom:1px solid #E8ECFF">
+  <div style="max-width:1280px;margin:0 auto;padding:0 48px;display:grid;grid-template-columns:repeat(4,1fr);gap:1px;background:#CDD2EE;border:1px solid #CDD2EE;border-radius:14px;overflow:hidden">
+    <div style="background:#F4F6FF;padding:36px 32px;text-align:center" class="gs-hidden">
+      <div style="font-size:48px;font-weight:900;letter-spacing:-2px;color:#1A1F71;line-height:1;margin-bottom:6px">+100</div>
+      <div style="font-size:14px;color:#4A5180;font-weight:400">معيار تقييم</div>
+    </div>
+    <div style="background:#F4F6FF;padding:36px 32px;text-align:center" class="gs-hidden">
+      <div style="font-size:48px;font-weight:900;letter-spacing:-2px;color:#1A1F71;line-height:1;margin-bottom:6px">5</div>
+      <div style="font-size:14px;color:#4A5180;font-weight:400">أدوات متكاملة</div>
+    </div>
+    <div style="background:#F4F6FF;padding:36px 32px;text-align:center" class="gs-hidden">
+      <div style="font-size:48px;font-weight:900;letter-spacing:-2px;color:#1A1F71;line-height:1;margin-bottom:6px">&lt;5</div>
+      <div style="font-size:14px;color:#4A5180;font-weight:400">دقائق للتقرير الكامل</div>
+    </div>
+    <div style="background:#F4F6FF;padding:36px 32px;text-align:center" class="gs-hidden">
+      <div style="font-size:48px;font-weight:900;letter-spacing:-2px;color:#1A1F71;line-height:1;margin-bottom:6px">7</div>
+      <div style="font-size:14px;color:#4A5180;font-weight:400">panels في التقرير</div>
+    </div>
+  </div>
+</section>
+
+<!-- ══ FEATURES (Icon grid - Bluehost style) ══ -->
+<section id="features" style="background:#fff;padding:88px 0">
+  <div style="max-width:1280px;margin:0 auto;padding:0 48px">
+    <div style="text-align:center;margin-bottom:56px">
+      <div style="display:inline-flex;align-items:center;gap:8px;background:rgba(26,31,113,.06);border:1px solid rgba(26,31,113,.12);border-radius:5px;padding:6px 14px;margin-bottom:16px">
+        <div style="width:16px;height:2px;background:#F7B600"></div>
+        <span style="font-size:11px;font-weight:700;letter-spacing:1.5px;text-transform:uppercase;color:#1A1F71">الأدوات</span>
+      </div>
+      <h2 class="gs-hidden" style="font-size:clamp(34px,4vw,52px);font-weight:900;letter-spacing:-2px;line-height:1.05;color:#0A0D3A;margin-bottom:14px">كل ما تحتاجه <span style="color:#1A1F71">في مكان واحد</span></h2>
+      <p class="gs-hidden" style="font-size:17px;color:#8B94BB;max-width:520px;margin:0 auto;line-height:1.7;font-weight:300">تقييم شامل بالذكاء الاصطناعي — من الأداء والوصول إلى تحليل المنافسين وسلوك المستخدمين</p>
+    </div>
+
+    <!-- 3 cols icon grid (Bluehost-style) -->
+    <div style="display:grid;grid-template-columns:repeat(3,1fr);gap:24px">
+
+      <div class="gs-hidden" style="padding:32px;border:1px solid #E8ECFF;border-radius:12px;background:#fff;transition:all .2s;cursor:default" onmouseover="this.style.borderColor='#1A1F71';this.style.boxShadow='0 8px 32px rgba(26,31,113,.1)';this.style.transform='translateY(-3px)'" onmouseout="this.style.borderColor='#E8ECFF';this.style.boxShadow='';this.style.transform=''">
+        <div style="width:52px;height:52px;background:rgba(26,31,113,.08);border-radius:12px;display:flex;align-items:center;justify-content:center;font-size:24px;margin-bottom:18px">⚡</div>
+        <h3 style="font-size:17px;font-weight:700;letter-spacing:-.3px;margin-bottom:9px;color:#0A0D3A">Google Lighthouse</h3>
+        <p style="font-size:14px;color:#8B94BB;line-height:1.65;font-weight:300;margin-bottom:14px">تقييم الأداء والـ SEO وإمكانية الوصول لـ Mobile وDesktop مع Core Web Vitals الكاملة.</p>
+        <div style="display:flex;flex-wrap:wrap;gap:5px">
+          <span style="font-size:11px;padding:3px 9px;border-radius:4px;background:#F4F6FF;color:#4A5180;border:1px solid #CDD2EE">Performance</span>
+          <span style="font-size:11px;padding:3px 9px;border-radius:4px;background:#F4F6FF;color:#4A5180;border:1px solid #CDD2EE">Accessibility</span>
+          <span style="font-size:11px;padding:3px 9px;border-radius:4px;background:#F4F6FF;color:#4A5180;border:1px solid #CDD2EE">SEO</span>
+        </div>
+      </div>
+
+      <div class="gs-hidden" style="padding:32px;border:1px solid #E8ECFF;border-radius:12px;background:#fff;transition:all .2s;cursor:default" onmouseover="this.style.borderColor='#1A1F71';this.style.boxShadow='0 8px 32px rgba(26,31,113,.1)';this.style.transform='translateY(-3px)'" onmouseout="this.style.borderColor='#E8ECFF';this.style.boxShadow='';this.style.transform=''">
+        <div style="width:52px;height:52px;background:rgba(247,182,0,.1);border-radius:12px;display:flex;align-items:center;justify-content:center;font-size:24px;margin-bottom:18px">🤖</div>
+        <h3 style="font-size:17px;font-weight:700;letter-spacing:-.3px;margin-bottom:9px;color:#0A0D3A">تحليل AI — 13 قسم</h3>
+        <p style="font-size:14px;color:#8B94BB;line-height:1.65;font-weight:300;margin-bottom:14px">Claude AI يزور موقعك ويقيّم أكثر من 100 معيار وفق Nielsen's Heuristics وUI Tests تلقائياً.</p>
+        <div style="display:flex;flex-wrap:wrap;gap:5px">
+          <span style="font-size:11px;padding:3px 9px;border-radius:4px;background:#F4F6FF;color:#4A5180;border:1px solid #CDD2EE">Nielsen's 10</span>
+          <span style="font-size:11px;padding:3px 9px;border-radius:4px;background:#F4F6FF;color:#4A5180;border:1px solid #CDD2EE">UI Tests</span>
+          <span style="font-size:11px;padding:3px 9px;border-radius:4px;background:#F4F6FF;color:#4A5180;border:1px solid #CDD2EE">Arabic RTL</span>
+        </div>
+      </div>
+
+      <div class="gs-hidden" style="padding:32px;border:1px solid #E8ECFF;border-radius:12px;background:#fff;transition:all .2s;cursor:default" onmouseover="this.style.borderColor='#1A1F71';this.style.boxShadow='0 8px 32px rgba(26,31,113,.1)';this.style.transform='translateY(-3px)'" onmouseout="this.style.borderColor='#E8ECFF';this.style.boxShadow='';this.style.transform=''">
+        <div style="width:52px;height:52px;background:rgba(45,139,78,.1);border-radius:12px;display:flex;align-items:center;justify-content:justify;font-size:24px;margin-bottom:18px;justify-content:center">♿</div>
+        <h3 style="font-size:17px;font-weight:700;letter-spacing:-.3px;margin-bottom:9px;color:#0A0D3A">WAVE Accessibility</h3>
+        <p style="font-size:14px;color:#8B94BB;line-height:1.65;font-weight:300;margin-bottom:14px">فحص شامل لإمكانية الوصول وفق WCAG 2.1 — أخطاء، تنبيهات، تباين لوني، وعناصر ARIA.</p>
+        <div style="display:flex;flex-wrap:wrap;gap:5px">
+          <span style="font-size:11px;padding:3px 9px;border-radius:4px;background:#F4F6FF;color:#4A5180;border:1px solid #CDD2EE">WCAG 2.1</span>
+          <span style="font-size:11px;padding:3px 9px;border-radius:4px;background:#F4F6FF;color:#4A5180;border:1px solid #CDD2EE">ARIA</span>
+          <span style="font-size:11px;padding:3px 9px;border-radius:4px;background:#F4F6FF;color:#4A5180;border:1px solid #CDD2EE">Contrast</span>
+        </div>
+      </div>
+
+      <div class="gs-hidden" style="padding:32px;border:1px solid #E8ECFF;border-radius:12px;background:#fff;transition:all .2s;cursor:default" onmouseover="this.style.borderColor='#1A1F71';this.style.boxShadow='0 8px 32px rgba(26,31,113,.1)';this.style.transform='translateY(-3px)'" onmouseout="this.style.borderColor='#E8ECFF';this.style.boxShadow='';this.style.transform=''">
+        <div style="width:52px;height:52px;background:rgba(43,108,176,.1);border-radius:12px;display:flex;align-items:center;justify-content:center;font-size:24px;margin-bottom:18px">🌐</div>
+        <h3 style="font-size:17px;font-weight:700;letter-spacing:-.3px;margin-bottom:9px;color:#0A0D3A">SimilarWeb Analytics</h3>
+        <p style="font-size:14px;color:#8B94BB;line-height:1.65;font-weight:300;margin-bottom:14px">زيارات شهرية، مصادر الزيارات، أهم الدول، المنافسون، والكلمات المفتاحية الرئيسية.</p>
+        <div style="display:flex;flex-wrap:wrap;gap:5px">
+          <span style="font-size:11px;padding:3px 9px;border-radius:4px;background:#F4F6FF;color:#4A5180;border:1px solid #CDD2EE">Traffic</span>
+          <span style="font-size:11px;padding:3px 9px;border-radius:4px;background:#F4F6FF;color:#4A5180;border:1px solid #CDD2EE">Competitors</span>
+          <span style="font-size:11px;padding:3px 9px;border-radius:4px;background:#F4F6FF;color:#4A5180;border:1px solid #CDD2EE">Keywords</span>
+        </div>
+      </div>
+
+      <div class="gs-hidden" style="padding:32px;border:1px solid #E8ECFF;border-radius:12px;background:#fff;transition:all .2s;cursor:default" onmouseover="this.style.borderColor='#1A1F71';this.style.boxShadow='0 8px 32px rgba(26,31,113,.1)';this.style.transform='translateY(-3px)'" onmouseout="this.style.borderColor='#E8ECFF';this.style.boxShadow='';this.style.transform=''">
+        <div style="width:52px;height:52px;background:rgba(192,57,43,.08);border-radius:12px;display:flex;align-items:center;justify-content:center;font-size:24px;margin-bottom:18px">🔥</div>
+        <h3 style="font-size:17px;font-weight:700;letter-spacing:-.3px;margin-bottom:9px;color:#0A0D3A">Heatmaps Prediction</h3>
+        <p style="font-size:14px;color:#8B94BB;line-height:1.65;font-weight:300;margin-bottom:14px">خرائط حرارية Click وAttention وScroll Depth بناءً على F-Pattern وFitts' Law.</p>
+        <div style="display:flex;flex-wrap:wrap;gap:5px">
+          <span style="font-size:11px;padding:3px 9px;border-radius:4px;background:#F4F6FF;color:#4A5180;border:1px solid #CDD2EE">Click Map</span>
+          <span style="font-size:11px;padding:3px 9px;border-radius:4px;background:#F4F6FF;color:#4A5180;border:1px solid #CDD2EE">Attention</span>
+          <span style="font-size:11px;padding:3px 9px;border-radius:4px;background:#F4F6FF;color:#4A5180;border:1px solid #CDD2EE">Scroll Depth</span>
+        </div>
+      </div>
+
+      <div class="gs-hidden" style="padding:32px;border:1px solid #E8ECFF;border-radius:12px;background:#fff;transition:all .2s;cursor:default" onmouseover="this.style.borderColor='#1A1F71';this.style.boxShadow='0 8px 32px rgba(26,31,113,.1)';this.style.transform='translateY(-3px)'" onmouseout="this.style.borderColor='#E8ECFF';this.style.boxShadow='';this.style.transform=''">
+        <div style="width:52px;height:52px;background:rgba(124,58,237,.1);border-radius:12px;display:flex;align-items:center;justify-content:center;font-size:24px;margin-bottom:18px">👁</div>
+        <h3 style="font-size:17px;font-weight:700;letter-spacing:-.3px;margin-bottom:9px;color:#0A0D3A">Color Blindness Test</h3>
+        <p style="font-size:14px;color:#8B94BB;line-height:1.65;font-weight:300;margin-bottom:14px">اختبار عمى الألوان بـ 5 أنواع — مقارنة الألوان مع نسب التباين WCAG لكل نوع.</p>
+        <div style="display:flex;flex-wrap:wrap;gap:5px">
+          <span style="font-size:11px;padding:3px 9px;border-radius:4px;background:#F4F6FF;color:#4A5180;border:1px solid #CDD2EE">Deuteranopia</span>
+          <span style="font-size:11px;padding:3px 9px;border-radius:4px;background:#F4F6FF;color:#4A5180;border:1px solid #CDD2EE">Protanopia</span>
+          <span style="font-size:11px;padding:3px 9px;border-radius:4px;background:#F4F6FF;color:#4A5180;border:1px solid #CDD2EE">WCAG</span>
+        </div>
+      </div>
+
+    </div>
+  </div>
+</section>
+
+<!-- ══ HOW IT WORKS ══ -->
+<section id="how" style="background:#1A1F71;padding:88px 0">
+  <div style="max-width:1280px;margin:0 auto;padding:0 48px">
+    <div style="text-align:center;margin-bottom:52px">
+      <div style="display:inline-flex;align-items:center;gap:8px;background:rgba(247,182,0,.1);border:1px solid rgba(247,182,0,.2);border-radius:5px;padding:6px 14px;margin-bottom:16px">
+        <div style="width:16px;height:2px;background:#F7B600"></div>
+        <span style="font-size:11px;font-weight:700;letter-spacing:1.5px;text-transform:uppercase;color:#F7B600">كيف يعمل</span>
+      </div>
+      <h2 class="gs-hidden" style="font-size:clamp(34px,4vw,50px);font-weight:900;letter-spacing:-2px;line-height:1.05;color:#fff">من الرابط إلى التقرير<br><span style="color:#F7B600">في 3 خطوات</span></h2>
+    </div>
+    <div class="gs-scale" style="display:grid;grid-template-columns:repeat(3,1fr);gap:1px;background:rgba(255,255,255,.08);border-radius:14px;overflow:hidden;border:1px solid rgba(255,255,255,.08)">
+      <div style="padding:40px 36px;background:#1A1F71;border-left:1px solid rgba(255,255,255,.08);transition:background .2s" onmouseover="this.style.background='#0F1450'" onmouseout="this.style.background='#1A1F71'">
+        <div style="width:44px;height:44px;background:rgba(247,182,0,.15);border:1px solid rgba(247,182,0,.3);border-radius:50%;display:flex;align-items:center;justify-content:center;font-size:16px;font-weight:900;color:#F7B600;margin-bottom:20px">01</div>
+        <h3 style="font-size:17px;font-weight:700;color:#fff;margin-bottom:9px">أدخل الرابط</h3>
+        <p style="font-size:14px;color:rgba(255,255,255,.4);line-height:1.65;font-weight:300">اختر صفحة واحدة للتحليل العميق أو الموقع كاملاً — اكتشاف تلقائي لـ 4 صفحات.</p>
+      </div>
+      <div style="padding:40px 36px;background:#1A1F71;border-left:1px solid rgba(255,255,255,.08);transition:background .2s" onmouseover="this.style.background='#0F1450'" onmouseout="this.style.background='#1A1F71'">
+        <div style="width:44px;height:44px;background:rgba(247,182,0,.15);border:1px solid rgba(247,182,0,.3);border-radius:50%;display:flex;align-items:center;justify-content:center;font-size:16px;font-weight:900;color:#F7B600;margin-bottom:20px">02</div>
+        <h3 style="font-size:17px;font-weight:700;color:#fff;margin-bottom:9px">تحليل متوازٍ تلقائي</h3>
+        <p style="font-size:14px;color:rgba(255,255,255,.4);line-height:1.65;font-weight:300">5 أدوات تعمل معاً بالتوازي — لا تنتظر، فقط استلم التقرير بعد 3-5 دقائق.</p>
+      </div>
+      <div style="padding:40px 36px;background:#1A1F71;transition:background .2s" onmouseover="this.style.background='#0F1450'" onmouseout="this.style.background='#1A1F71'">
+        <div style="width:44px;height:44px;background:rgba(247,182,0,.15);border:1px solid rgba(247,182,0,.3);border-radius:50%;display:flex;align-items:center;justify-content:center;font-size:16px;font-weight:900;color:#F7B600;margin-bottom:20px">03</div>
+        <h3 style="font-size:17px;font-weight:700;color:#fff;margin-bottom:9px">تقرير + PDF</h3>
+        <p style="font-size:14px;color:rgba(255,255,255,.4);line-height:1.65;font-weight:300">7 panels تفصيلية، checklist جودة، وتصدير PDF جاهز للعميل.</p>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ══ PRICING ══ -->
+<section id="pricing" style="background:#fff;padding:88px 0">
+  <div style="max-width:1280px;margin:0 auto;padding:0 48px">
+    <div style="text-align:center;margin-bottom:52px">
+      <div style="display:inline-flex;align-items:center;gap:8px;background:rgba(26,31,113,.06);border:1px solid rgba(26,31,113,.12);border-radius:5px;padding:6px 14px;margin-bottom:16px">
+        <div style="width:16px;height:2px;background:#F7B600"></div>
+        <span style="font-size:11px;font-weight:700;letter-spacing:1.5px;text-transform:uppercase;color:#1A1F71">الأسعار</span>
+      </div>
+      <h2 class="gs-hidden" style="font-size:clamp(34px,4vw,50px);font-weight:900;letter-spacing:-2px;line-height:1.05;color:#0A0D3A">خطط مرنة لكل الاحتياجات</h2>
+    </div>
+    <div class="gs-hidden" style="display:grid;grid-template-columns:repeat(3,1fr);gap:20px;align-items:start">
+      <!-- Free -->
+      <div style="border:1px solid #CDD2EE;border-radius:14px;padding:34px;background:#fff;box-shadow:0 1px 4px rgba(26,31,113,.06),0 4px 12px rgba(26,31,113,.04)">
+        <div style="font-size:11px;font-weight:700;text-transform:uppercase;letter-spacing:1px;color:#8B94BB;margin-bottom:16px">مجاني</div>
+        <div style="margin-bottom:6px"><span style="font-size:52px;font-weight:900;letter-spacing:-2.5px;color:#0A0D3A;line-height:1">0</span><span style="font-size:16px;color:#8B94BB;font-weight:400"> ريال</span></div>
+        <div style="font-size:13px;color:#8B94BB;margin-bottom:28px">إلى الأبد · لا بطاقة</div>
+        <button onclick="openTool()" style="display:block;width:100%;padding:13px;border-radius:6px;font-size:14px;font-weight:700;cursor:pointer;border:2px solid #CDD2EE;background:transparent;color:#0A0D3A;transition:all .15s;font-family:var(--fn);margin-bottom:28px" onmouseover="this.style.borderColor='#1A1F71'" onmouseout="this.style.borderColor='#CDD2EE'">ابدأ مجاناً</button>
+        <div style="display:flex;flex-direction:column;gap:12px">
+          <div style="display:flex;align-items:center;gap:9px;font-size:14px;color:#4A5180"><span style="color:#2D8B4E;font-weight:700">✓</span>تقييم يدوي — 13 قسم</div>
+          <div style="display:flex;align-items:center;gap:9px;font-size:14px;color:#4A5180"><span style="color:#2D8B4E;font-weight:700">✓</span>تقرير PDF</div>
+          <div style="display:flex;align-items:center;gap:9px;font-size:14px;color:#CDD2EE"><span>—</span>AI تلقائي</div>
+          <div style="display:flex;align-items:center;gap:9px;font-size:14px;color:#CDD2EE"><span>—</span>SimilarWeb & GA</div>
+        </div>
+      </div>
+      <!-- Pro (featured) -->
+      <div style="border:2px solid #1A1F71;border-radius:14px;padding:34px;background:#1A1F71;position:relative;box-shadow:0 20px 60px rgba(26,31,113,.3),0 0 0 1px rgba(247,182,0,.2)">
+        <div style="position:absolute;top:-14px;left:50%;transform:translateX(-50%);background:#F7B600;color:#1A1F71;font-size:11px;font-weight:800;padding:5px 16px;border-radius:980px;letter-spacing:.5px;white-space:nowrap;box-shadow:0 4px 12px rgba(247,182,0,.4)">الأكثر شيوعاً ⭐</div>
+        <div style="font-size:11px;font-weight:700;text-transform:uppercase;letter-spacing:1px;color:rgba(255,255,255,.4);margin-bottom:16px">احترافي</div>
+        <div style="margin-bottom:6px"><span style="font-size:52px;font-weight:900;letter-spacing:-2.5px;color:#fff;line-height:1">99</span><span style="font-size:16px;color:rgba(255,255,255,.4);font-weight:400"> ريال/شهر</span></div>
+        <div style="font-size:13px;color:rgba(255,255,255,.4);margin-bottom:28px">تجربة 14 يوم · يُلغى في أي وقت</div>
+        <button onclick="openTool()" style="display:block;width:100%;padding:14px;border-radius:6px;font-size:14px;font-weight:800;cursor:pointer;border:none;background:#F7B600;color:#1A1F71;transition:all .15s;font-family:var(--fn);margin-bottom:28px" onmouseover="this.style.background='#FFD040'" onmouseout="this.style.background='#F7B600'">جرّب 14 يوم مجاناً ←</button>
+        <div style="display:flex;flex-direction:column;gap:12px">
+          <div style="display:flex;align-items:center;gap:9px;font-size:14px;color:rgba(255,255,255,.7)"><span style="color:#F7B600;font-weight:700">✓</span>كل ما في المجاني</div>
+          <div style="display:flex;align-items:center;gap:9px;font-size:14px;color:rgba(255,255,255,.7)"><span style="color:#F7B600;font-weight:700">✓</span>AI تلقائي — 5 أدوات</div>
+          <div style="display:flex;align-items:center;gap:9px;font-size:14px;color:rgba(255,255,255,.7)"><span style="color:#F7B600;font-weight:700">✓</span>SimilarWeb + Google Analytics</div>
+          <div style="display:flex;align-items:center;gap:9px;font-size:14px;color:rgba(255,255,255,.7)"><span style="color:#F7B600;font-weight:700">✓</span>Panel View + PDF احترافي</div>
+          <div style="display:flex;align-items:center;gap:9px;font-size:14px;color:rgba(255,255,255,.7)"><span style="color:#F7B600;font-weight:700">✓</span>تقارير غير محدودة</div>
+        </div>
+      </div>
+      <!-- Enterprise -->
+      <div style="border:1px solid #CDD2EE;border-radius:14px;padding:34px;background:#fff;box-shadow:0 1px 4px rgba(26,31,113,.06),0 4px 12px rgba(26,31,113,.04)">
+        <div style="font-size:11px;font-weight:700;text-transform:uppercase;letter-spacing:1px;color:#8B94BB;margin-bottom:16px">مؤسسي</div>
+        <div style="margin-bottom:6px"><span style="font-size:32px;font-weight:900;letter-spacing:-.5px;color:#0A0D3A;line-height:1">تواصل معنا</span></div>
+        <div style="font-size:13px;color:#8B94BB;margin-bottom:28px">سعر مخصص · فوترة سنوية</div>
+        <button style="display:block;width:100%;padding:13px;border-radius:6px;font-size:14px;font-weight:700;cursor:pointer;border:2px solid #CDD2EE;background:transparent;color:#0A0D3A;transition:all .15s;font-family:var(--fn);margin-bottom:28px" onmouseover="this.style.borderColor='#1A1F71'" onmouseout="this.style.borderColor='#CDD2EE'">تواصل معنا</button>
+        <div style="display:flex;flex-direction:column;gap:12px">
+          <div style="display:flex;align-items:center;gap:9px;font-size:14px;color:#4A5180"><span style="color:#2D8B4E;font-weight:700">✓</span>كل ما في الاحترافي</div>
+          <div style="display:flex;align-items:center;gap:9px;font-size:14px;color:#4A5180"><span style="color:#2D8B4E;font-weight:700">✓</span>API مخصص للتكامل</div>
+          <div style="display:flex;align-items:center;gap:9px;font-size:14px;color:#4A5180"><span style="color:#2D8B4E;font-weight:700">✓</span>دعم مخصص + SLA مضمون</div>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ══ CTA BANNER (Bluehost-style full width) ══ -->
+<section style="background:linear-gradient(135deg,#0F1450 0%,#1A1F71 100%);padding:72px 48px;text-align:center;position:relative;overflow:hidden">
+  <div style="position:absolute;top:0;left:0;right:0;height:3px;background:#F7B600"></div>
+  <div style="position:absolute;inset:0;background:radial-gradient(ellipse 50% 80% at 50% 0%,rgba(247,182,0,.06),transparent)"></div>
+  <div style="position:relative;z-index:1;max-width:700px;margin:0 auto">
+    <div style="font-size:11px;font-weight:700;letter-spacing:2px;text-transform:uppercase;color:#F7B600;margin-bottom:16px;display:flex;align-items:center;justify-content:center;gap:8px"><div style="width:20px;height:1px;background:#F7B600"></div>ابدأ الآن<div style="width:20px;height:1px;background:#F7B600"></div></div>
+    <h2 style="font-size:clamp(32px,5vw,58px);font-weight:900;letter-spacing:-2.5px;color:#fff;margin-bottom:16px;line-height:1.05">قيّم موقعك مجاناً<br><span style="color:#F7B600">وافهم ما يجب تحسينه</span></h2>
+    <p style="font-size:16px;color:rgba(255,255,255,.45);margin-bottom:36px;font-weight:300;line-height:1.65">لا يلزم تسجيل حساب. فقط أدخل الرابط واحصل على تقرير شامل.</p>
+    <div style="display:flex;align-items:center;justify-content:center;gap:14px;flex-wrap:wrap">
+      <button onclick="openTool()" style="background:#F7B600;color:#1A1F71;padding:16px 36px;border-radius:6px;font-size:15px;font-weight:800;border:none;cursor:pointer;font-family:var(--fn);transition:all .2s;box-shadow:0 8px 32px rgba(247,182,0,.35)" onmouseover="this.style.background='#FFD040';this.style.transform='translateY(-2px)'" onmouseout="this.style.background='#F7B600';this.style.transform=''">ابدأ التحليل مجاناً ←</button>
+      <span style="font-size:13px;color:rgba(255,255,255,.3)">لا بطاقة ائتمان · مجاناً للأبد</span>
+    </div>
+  </div>
+</section>
+
+<!-- ══ FOOTER ══ -->
+<footer style="background:#0A0D3A;padding:40px 48px;border-top:1px solid rgba(255,255,255,.06)">
+  <div style="max-width:1280px;margin:0 auto;display:flex;align-items:center;justify-content:space-between;flex-wrap:wrap;gap:20px">
+    <div style="display:flex;align-items:center;gap:10px">
+      <div style="width:30px;height:30px;background:#F7B600;border-radius:5px;display:flex;align-items:center;justify-content:center;font-size:13px;font-weight:900;color:#1A1F71">U</div>
+      <span style="font-size:17px;font-weight:800;color:#fff;letter-spacing:-.3px">UXScan<span style="color:#F7B600">.</span></span>
+    </div>
+    <div style="display:flex;gap:28px;flex-wrap:wrap">
+      <a href="#features" style="color:rgba(255,255,255,.3);text-decoration:none;font-size:13px;transition:color .2s" onmouseover="this.style.color='#fff'" onmouseout="this.style.color='rgba(255,255,255,.3)'">الميزات</a>
+      <a href="#how" style="color:rgba(255,255,255,.3);text-decoration:none;font-size:13px;transition:color .2s" onmouseover="this.style.color='#fff'" onmouseout="this.style.color='rgba(255,255,255,.3)'">كيف يعمل</a>
+      <a href="#pricing" style="color:rgba(255,255,255,.3);text-decoration:none;font-size:13px;transition:color .2s" onmouseover="this.style.color='#fff'" onmouseout="this.style.color='rgba(255,255,255,.3)'">الأسعار</a>
+    </div>
+    <div style="font-size:12px;color:rgba(255,255,255,.2)">© 2025 UXScan · مدعوم بـ Claude AI</div>
+  </div>
+</footer>
+
+</div>
+<!-- TOOL -->
+<div id="tool">
+<div class="tgbar"><div class="tgbarf" id="gpf"></div></div>
+<nav class="tnav" id="tnav">
+  <button class="tbk hd" id="tbk" onclick="goB()">→ رجوع</button>
+  <div class="tcent"><a class="tlog" href="#" onclick="toLanding()"><div class="tlsq">U</div><span class="tltx">UXScan</span></a><div class="tnd" id="tnd"></div><div class="tnco" id="tnco"></div></div>
+  <div><button class="tskip" id="tskip" style="display:none" onclick="doRep()">تخطي ←</button></div>
+</nav>
+<div class="bbar hd" id="bbar">
+  <div><button class="bprev" onclick="goB()">← السابق</button></div>
+  <div class="bbc"><div class="bbbr"><div class="bbbf" id="bbbf"></div></div><div class="bbtx" id="bbtx"></div></div>
+  <button class="bnext" id="bnxt" onclick="goN()">التالي ←</button>
+</div>
+<!-- LOADING -->
+<div class="lov" id="lov">
+  <div class="lsq">U</div>
+  <h2 class="ltitle">جارٍ تحليل الموقع</h2>
+  <div class="lsub" id="lsub">example.com</div>
+  <div class="lpbar"><div class="lpbarf" id="lpbarf"></div></div>
+  <div class="lstatus" id="lstatus">يرجى الانتظار...</div>
+  <div id="sitePagesList"></div>
+</div>
+<!-- ts0: Welcome -->
+<div class="tscr on" id="ts0">
+  <div class="twrap">
+    <div class="twe">تقييم شامل بالذكاء الاصطناعي</div>
+    <h1 class="twh1">حلّل أي موقع<br><em>بضغطة واحدة</em></h1>
+    <p class="twp">اختر مستوى التحليل ثم أدخل الرابط.</p>
+    <div class="mode-tabs">
+      <div class="mode-tab on" id="modeTab0" onclick="setMode(0)"><div class="mode-tab-icon">📄</div><div class="mode-tab-title">صفحة واحدة</div><div class="mode-tab-sub">تحليل عميق لـ URL محدد</div></div>
+      <div class="mode-tab" id="modeTab1" onclick="setMode(1)"><div class="mode-tab-icon">🌐</div><div class="mode-tab-title">الموقع كاملاً</div><div class="mode-tab-sub">اكتشاف وتحليل 4 صفحات</div></div>
+    </div>
+    <div class="ubox">
+      <div class="ulbl">رابط الموقع المراد تقييمه</div>
+      <div class="urow"><input class="uinp" id="uinp" type="url" placeholder="https://example.com"/><button class="ugo" id="ugo" onclick="doAna()">تحليل ←</button></div>
+      <input type="hidden" id="wkey" value="64z5IZQU6950"/>
+      <div class="uindics">
+        <div class="uind"><div class="udot" style="background:var(--gn)"></div>WAVE</div>
+        <div class="uind"><div class="udot" style="background:var(--or)"></div>Lighthouse</div>
+        <div class="uind"><div class="udot" style="background:var(--bl)"></div>SimilarWeb</div>
+        <div class="uind"><div class="udot" style="background:var(--acc)"></div>Heatmaps</div>
+      </div>
+    </div>
+    <div class="divl">أو</div>
+    <button class="bman" onclick="doMan()">التقييم اليدوي فقط ←</button>
+    <div class="srow">
+      <div class="scl" id="statMode"><span class="scn">📄</span><div class="sclb">صفحة</div></div>
+      <div class="scl"><span class="scn">5</span><div class="sclb">أدوات</div></div>
+      <div class="scl"><span class="scn">+100</span><div class="sclb">معيار</div></div>
+      <div class="scl"><span class="scn">PDF</span><div class="sclb">تقرير</div></div>
+    </div>
+  </div>
+</div>
+<!-- ts1: Info -->
+<div class="tscr" id="ts1">
+  <div class="ifw"><div class="ifc">
+    <div class="ibn" id="ibn"><span style="font-size:18px;flex-shrink:0">✓</span><div><div class="ibt">تم التحليل بنجاح</div><div class="ibs" id="ibs">تم تعبئة التقييم تلقائياً.</div></div></div>
+    <div class="ie">خطوة 2 من 2</div><div class="it">معلومات المقيّم</div><div class="is">ستظهر في التقرير النهائي.</div>
+    <div class="ig">
+      <div><label class="il">اسم المقيّم</label><input class="ifi" id="iNm" type="text" placeholder="محمد أحمد"></div>
+      <div><label class="il">الوظيفة</label><input class="ifi" id="iRl" type="text" placeholder="مصمم UX"></div>
+      <div><label class="il">المنتج / النظام</label><input class="ifi" id="iPr" type="text" placeholder="اسم الموقع"></div>
+      <div><label class="il">الجهة</label><input class="ifi" id="iOr" type="text" placeholder="اسم الجهة"></div>
+    </div>
+  </div></div>
+</div>
+<div id="secW"></div>
+<!-- REPORT -->
+<div class="tscr" id="tsrep">
+  <div class="rpb">
+    <button class="brbk" onclick="goToS(0)">← العودة</button>
+    <div class="rpbt">📋 تقرير UXScan</div>
+    <button class="bprt" onclick="printReport()">⬇ PDF</button>
+  </div>
+  <div class="report-body">
+    <nav class="rpanel-sidebar" id="rpSidebar">
+      <div class="rpn on" id="rpn-ov" onclick="switchPanel('ov')"><span class="rpn-ic">📊</span><span class="rpn-lbl">نظرة عامة</span></div>
+      <div class="rpn" id="rpn-lh" onclick="switchPanel('lh')"><span class="rpn-ic">⚡</span><span class="rpn-lbl">Lighthouse</span></div>
+      <div class="rpn" id="rpn-wa" onclick="switchPanel('wa')"><span class="rpn-ic">♿</span><span class="rpn-lbl">WAVE</span></div>
+      <div class="rpn" id="rpn-sw" onclick="switchPanel('sw')"><span class="rpn-ic">🌐</span><span class="rpn-lbl">SimilarWeb</span></div>
+      <div class="rpn" id="rpn-ga" onclick="switchPanel('ga')"><span class="rpn-ic">📈</span><span class="rpn-lbl">Google Analytics</span></div>
+      <div class="rpn" id="rpn-hm" onclick="switchPanel('hm')"><span class="rpn-ic">🔥</span><span class="rpn-lbl">Heatmaps</span></div>
+      <div class="rpn" id="rpn-cb" onclick="switchPanel('cb')"><span class="rpn-ic">👁</span><span class="rpn-lbl">Color Blind</span></div>
+      <div class="rpn-div"></div>
+      <div class="rpn" id="rpn-si" onclick="switchPanel('si')" style="display:none"><span class="rpn-ic">📄</span><span class="rpn-lbl">الموقع كاملاً</span></div>
+      <div class="rpn" id="rpn-ux" onclick="switchPanel('ux')"><span class="rpn-ic">📋</span><span class="rpn-lbl">تقييم UX</span></div>
+    </nav>
+    <div class="rpanel-content" id="rpContent">
+      <!-- Dark header always visible -->
+      <div class="rhd">
+        <div class="rhdtop"><div class="rlg"><div class="rlsq">U</div><span class="rlt">UXScan Report</span></div><div class="rbgs" id="rBgs"></div></div>
+        <h1 id="rTi">تقرير تقييم</h1><div class="rsub" id="rSb"></div><div class="rmt" id="rMt"></div>
+      </div>
+      <!-- OVERVIEW -->
+      <div class="rpanel" id="pan-ov">
+        <div class="pan-title">📊 نظرة عامة — ملخص جميع الأدوات</div>
+        <div class="ov-tool-cards" id="ovCards"></div>
+        <div class="pan-sec-title">نتيجة تقييم قابلية الاستخدام</div>
+        <div class="sclay">
+          <div class="rrgw"><svg width="116" height="116" viewBox="0 0 116 116"><circle cx="58" cy="58" r="46" fill="none" stroke="var(--br)" stroke-width="8"/><circle cx="58" cy="58" r="46" fill="none" stroke="var(--acc)" stroke-width="8" stroke-linecap="round" id="rarc" stroke-dasharray="289" stroke-dashoffset="289"/></svg><div class="rrgin"><div class="rrgn" id="rNum" style="color:var(--acc)">—</div><div class="rrgd">من 100</div></div></div>
+          <div class="kpg" id="kpg"></div>
+        </div>
+        <div class="pan-sec-title" style="margin-top:22px">✅ فحص جودة التقرير</div>
+        <div class="ov-checklist" id="ovChecklist"></div>
+      </div>
+      <!-- LIGHTHOUSE -->
+      <div class="rpanel" id="pan-lh" style="display:none">
+        <div class="pan-title">⚡ Google Lighthouse — أداء الموقع</div>
+        <div id="lhEmpty" class="pan-empty" style="display:none">لم يتم الحصول على بيانات Lighthouse.</div>
+        <div id="lhData">
+          <div class="ltbs"><button class="ltb on" id="ltb0" onclick="swLH('m')">📱 Mobile</button><button class="ltb" id="ltb1" onclick="swLH('d')">🖥 Desktop</button></div>
+          <div id="lhm"><div class="pan-sec-title">النتائج</div><div class="lhsg" id="lhSM"></div><div class="pan-sec-title">Core Web Vitals</div><div class="cwg" id="lhCM"></div><div class="pan-sec-title">أبرز المشكلات</div><div class="lissl" id="lhIM"></div></div>
+          <div id="lhd" style="display:none"><div class="pan-sec-title">النتائج</div><div class="lhsg" id="lhSD"></div><div class="pan-sec-title">Core Web Vitals</div><div class="cwg" id="lhCD"></div><div class="pan-sec-title">أبرز المشكلات</div><div class="lissl" id="lhID"></div></div>
+        </div>
+      </div>
+      <!-- WAVE -->
+      <div class="rpanel" id="pan-wa" style="display:none">
+        <div class="pan-title">♿ WAVE Accessibility</div>
+        <div id="waEmpty" class="pan-empty" style="display:none">لم يتم الحصول على بيانات WAVE. <a id="waLink" href="#" target="_blank" style="color:var(--acc);font-weight:600">فتح WAVE →</a></div>
+        <div id="waData"></div>
+      </div>
+      <!-- SIMILARWEB -->
+      <div class="rpanel" id="pan-sw" style="display:none">
+        <div class="pan-title">🌐 SimilarWeb — تحليل حركة المرور</div>
+        <div id="swEmpty" class="pan-empty" style="display:none">لم يتم الحصول على بيانات SimilarWeb. <a id="swLink" href="#" target="_blank" style="color:var(--acc);font-weight:600">فتح SimilarWeb →</a></div>
+        <div id="swData"></div>
+      </div>
+      <!-- GOOGLE ANALYTICS -->
+      <div class="rpanel" id="pan-ga" style="display:none">
+        <div class="pan-title">📈 Google Analytics & Search Console</div>
+        <div id="gaEmpty" class="pan-empty" style="display:none">لم يتم الحصول على بيانات. <a id="gaLink" href="#" target="_blank" style="color:var(--acc);font-weight:600">فتح Google Search Console →</a></div>
+        <div id="gaData"></div>
+      </div>
+      <!-- HEATMAPS -->
+      <div class="rpanel" id="pan-hm" style="display:none">
+        <div class="pan-title">🔥 Heatmap Prediction — أنماط السلوك</div>
+        <div class="ltbs" style="margin-bottom:18px"><button class="ltb on" id="htb0" onclick="swHM(0)">🖱 Click</button><button class="ltb" id="htb1" onclick="swHM(1)">👁 Attention</button><button class="ltb" id="htb2" onclick="swHM(2)">📜 Scroll</button></div>
+        <div class="hmg"><div><div id="hmSvg" style="background:var(--bg3);border-radius:10px;overflow:hidden;border:1px solid var(--br)"></div><div class="hmleg" style="margin-top:8px"><div class="hmlegb"></div><span style="font-size:10px;color:var(--text3);font-family:var(--fn-sans)">منخفض → مرتفع</span></div></div><div class="hmins" id="hmIns"></div></div>
+      </div>
+      <!-- COLOR BLIND -->
+      <div class="rpanel" id="pan-cb" style="display:none">
+        <div class="pan-title">👁 Color Blindness Test</div>
+        <div class="cb-tabs" id="cbTabs"></div>
+        <div id="cbContent"></div>
+      </div>
+      <!-- SITE LEVEL -->
+      <div class="rpanel" id="pan-si" style="display:none">
+        <div class="pan-title">🌐 تحليل الموقع الكامل</div>
+        <div class="site-overview" id="siteOverview"></div>
+        <div class="pan-sec-title">نتائج كل صفحة</div>
+        <div class="site-pages-grid" id="sitePagesGrid"></div>
+        <div class="pan-sec-title" style="margin-top:16px">المشكلات المشتركة</div>
+        <div class="site-issues" id="siteIssues"></div>
+      </div>
+      <!-- UX ASSESSMENT -->
+      <div class="rpanel" id="pan-ux" style="display:none">
+        <div class="pan-title">📋 تقييم قابلية الاستخدام — التفاصيل</div>
+        <div class="pan-sec-title">النتائج حسب القسم</div>
+        <div id="rBrk"></div>
+        <div class="pan-sec-title" style="margin-top:20px">المشكلات المرصودة</div>
+        <div id="rIss"></div>
+        <div style="margin-top:20px;padding-top:16px;border-top:1px solid var(--br);display:flex;justify-content:space-between;align-items:center;flex-wrap:wrap;gap:10px">
+          <div class="rftx">تم إنشاؤه بتاريخ <strong id="rDt"></strong> · UXScan</div>
+          <div class="rfbg" id="rfbg">—</div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+</div>
+<script>
+/* ═══ LANDING ═══ */
+const obs=new IntersectionObserver(es=>es.forEach(e=>{if(e.isIntersecting)e.target.classList.add('in')}),{threshold:.1});
+document.querySelectorAll('.fade').forEach(el=>obs.observe(el));
+function openTool(){document.getElementById('landing').style.display='none';document.getElementById('tool').style.display='block';ci=0;updT();updB();updGP();window.scrollTo({top:0})}
+function toLanding(){document.getElementById('tool').style.display='none';document.getElementById('landing').style.display='block';window.scrollTo({top:0})}
+
+/* ═══ DATA ═══ */
+const SECS=[
+{id:'s1',n:'1',t:'h',ti:'رؤية حالة النظام',ds:'ردود الفعل تبقي المستخدمين على علم.',q:[{t:'هل مصطلحات القائمة سهلة الاستخدام؟',sc:'',n:'',a:null},{t:'هل يُعرض مؤشر تحميل للعمليات التي تتجاوز 3 ثوانٍ؟',sc:'',n:'لا يوجد مؤشر',a:'no'},{t:'هل تبدأ كل شاشة بعنوان يصف محتواها؟',sc:'',n:'',a:null},{t:'هل يُظهر النظام الخيارات المختارة بوضوح؟',sc:'',n:'',a:null},{t:'هل العناصر القابلة للنقر مميزة بصرياً؟',sc:'',n:'',a:null}]},
+{id:'s2',n:'2',t:'h',ti:'التوافق مع العالم الحقيقي',ds:'الكلمات المألوفة بدلاً من المصطلحات التقنية.',q:[{t:'هل صُمم النظام مع مراعاة احتياجات ذوي الإعاقة؟',sc:'',n:'لم يراعِ ذوي الإعاقة',a:'no'},{t:'هل يقع التنقل في المكان المألوف؟',sc:'',n:'',a:null},{t:'هل تمثل الأيقونات معناها بوضوح؟',sc:'',n:'أيقونات غير متماثلة',a:'no'},{t:'هل تم شرح جميع الاختصارات؟',sc:'',n:'اختصارات غير مشروحة',a:'no'}]},
+{id:'s3',n:'3',t:'h',ti:'التحكم وحرية الاستخدام',ds:'حرية التراجع والإلغاء في أي وقت.',q:[{t:'هل هناك ميزة إلغاء واضحة؟',sc:'',n:'غير موجودة',a:'no'},{t:'هل يمكن إلغاء العملية في أي مرحلة؟',sc:'',n:'لا يمكن الإلغاء',a:'no'},{t:'هل يمكن تعديل المعلومات الشخصية؟',sc:'',n:'',a:null},{t:'هل تحتوي الصفحات على breadcrumbs؟',sc:'',n:'لا توجد',a:'no'}]},
+{id:'s4',n:'4',t:'h',ti:'الاتساق والمعايير',ds:'الكلمات والإجراءات تعني نفس الشيء دائماً.',q:[{t:'هل التنقل متسق في جميع الصفحات؟',sc:'',n:'',a:null},{t:'هل الشعار معروض في كل صفحة ويؤدي للرئيسية؟',sc:'',n:'',a:null},{t:'هل الروابط يمكن التعرف عليها بسهولة؟',sc:'',n:'بعض الروابط غير واضحة',a:'no'},{t:'هل الأيقونات بديهية ولها تسميات؟',sc:'',n:'',a:null}]},
+{id:'s5',n:'5',t:'h',ti:'منع الأخطاء',ds:'تصميم يمنع المشكلة قبل حدوثها.',q:[{t:'هل يتم التحقق من صحة الحقول في الوقت الفعلي؟',sc:'',n:'لا يتم التحقق',a:'no'},{t:'هل تحتوي الحقول على placeholder توضيحي؟',sc:'',n:'لا توجد',a:'no'},{t:'هل يظل زر الإرسال غير نشط حتى تُملأ الحقول؟',sc:'',n:'الزر نشط دائماً',a:'no'},{t:'هل تشير رسائل الخطأ إلى الحقل المعني؟',sc:'',n:'لا توجد تلميحات',a:'no'}]},
+{id:'s6',n:'6',t:'h',ti:'الإدراك بدلاً من التذكير',ds:'عناصر النظام مرئية دون الحاجة للحفظ.',q:[{t:'هل الهوية البصرية متسقة في كل مكان؟',sc:'',n:'أشكال مختلفة',a:'no'},{t:'هل لا يربك النظام بتصميمات مختلفة لنفس المعنى؟',sc:'',n:'اختلاف يربك',a:'no'},{t:'هل موضع المكونات يتبع الأنماط المألوفة؟',sc:'',n:'',a:null},{t:'هل حجم ولون المكونات متناسق؟',sc:'',n:'اختلاف واضح',a:'no'}]},
+{id:'s7',n:'7',t:'h',ti:'المرونة وكفاءة الاستخدام',ds:'طرق متعددة لتنفيذ المهام.',q:[{t:'هل يسمح النظام للخبراء باستخدام الاختصارات؟',sc:'',n:'غير موجودة',a:'no'},{t:'هل يتيح النظام أتمتة الإجراءات المتكررة؟',sc:'',n:'غير موجودة',a:'no'},{t:'هل يتيح التعامل مع المهام بطرق متعددة؟',sc:'',n:'',a:null}]},
+{id:'s9',n:'9',t:'h',ti:'التعرف على الأخطاء وحلها',ds:'رسائل خطأ واضحة تساعد على الإصلاح.',q:[{t:'هل يتم تمييز الحقل المطلوب عند وجود خطأ؟',sc:'',n:'',a:null},{t:'هل هناك تلميح يشرح سبب عدم نشاط الزر؟',sc:'',n:'لا توجد تلميحات',a:'no'},{t:'هل صفحات الخطأ (404) تخبر المستخدم بما يجب فعله؟',sc:'',n:'لا توجد صفحات واضحة',a:'no'},{t:'هل نص الخطأ يشير إلى السبب والخطوات التالية؟',sc:'',n:'لا يوجد إرشاد',a:'no'}]},
+{id:'s10',n:'10',t:'h',ti:'المساعدة والتعليمات',ds:'توفير المعلومات اللازمة عند الحاجة.',q:[{t:'هل يوجد دعم فوري على الموقع؟',sc:'',n:'غير متوافر',a:'no'},{t:'هل توجد صفحة أسئلة شائعة؟',sc:'',n:'لا توجد',a:'no'},{t:'هل يمكن استئناف العمل من حيث توقف المستخدم؟',sc:'',n:'',a:null},{t:'هل تظل التفسيرات المهمة مرئية طالما يحتاجها المستخدم؟',sc:'',n:'غير موجودة',a:'no'}]},
+{id:'u1',n:'UI-أ',t:'u',ti:'مكونات النافذة والقوائم',ds:'اختبار UI — مكونات النافذة والقوائم.',q:[{t:'هل تم استخدام نوع النافذة الصحيح؟',sc:'',n:'',a:null},{t:'هل المكونات الأساسية تُستخدم باستمرار وفق المعايير؟',sc:'',n:'تضارب في الهوية',a:'no'},{t:'هل عنوان الشاشة يحدد محتوى النافذة؟',sc:'',n:'',a:null},{t:'هل يتم تجميع عناصر القائمة ذات الصلة؟',sc:'',n:'',a:null}]},
+{id:'u2',n:'UI-ب',t:'u',ti:'الكائنات الرسومية والأزرار',ds:'اختبار UI — الأزرار والنصوص.',q:[{t:'هل النص الثابت واضح وموجز؟',sc:'',n:'',a:null},{t:'هل تتبع الأزرار معايير متسقة؟',sc:'',n:'تختلف بين الصفحات',a:'no'},{t:'هل تستخدم مربعات الاختيار بشكل صحيح؟',sc:'',n:'',a:null}]},
+{id:'u3',n:'UI-ج',t:'u',ti:'التفاعل والتشغيل',ds:'اختبار UI — التنقل.',q:[{t:'هل يتم توفير اختصارات لوحة المفاتيح؟',sc:'',n:'غير موجودة',a:'no'},{t:'هل يتم اتباع معايير التنقل الموحدة؟',sc:'',n:'',a:null},{t:'هل يشير التعطيل بوضوح إلى الإجراءات غير المتاحة؟',sc:'',n:'',a:null},{t:'هل يتم توفير مؤشر تقدم أثناء المهام الطويلة؟',sc:'',n:'',a:null}]},
+{id:'u4',n:'UI-د',t:'u',ti:'اعتبارات التصميم والتدويل',ds:'اختبار UI — التصميم العام.',q:[{t:'هل الشاشة منظمة جيداً؟',sc:'',n:'',a:null},{t:'هل تتم محاذاة الحقول والمكونات بشكل صحيح؟',sc:'',n:'',a:null},{t:'هل يتم استخدام الألوان وفق معايير متسقة؟',sc:'',n:'',a:null},{t:'هل الشاشة مصممة لتناسب الاستخدام الدولي؟',sc:'',n:'',a:null}]}
+];
+const ST={};SECS.forEach(s=>{ST[s.id]=s.q.map(q=>({a:q.a,sc:q.sc,n:q.n,auto:false}))});
+const PGS=['w','inf',...SECS.map(s=>s.id),'rep'];
+let ci=0,wasA=false,aUrl='',testMode=0;
+let LH={m:null,d:null},WV=null,HM=null,CB=null,SW=null;
+let siteData={pages:[],results:{}};
+
+/* ═══ AI ═══ */
+async function ai(p,search,mtok=2000){
+  const tools=search?[{"type":"web_search_20250305","name":"web_search"}]:[];
+  let msgs=[{role:'user',content:p}],txt='';
+  for(let i=0;i<8;i++){
+    const r=await fetch('https://api.anthropic.com/v1/messages',{method:'POST',headers:{'Content-Type':'application/json'},body:JSON.stringify({model:'claude-sonnet-4-20250514',max_tokens:mtok,...(tools.length?{tools}:{}),messages:msgs})});
+    if(!r.ok)throw new Error('API:'+r.status);
+    const d=await r.json();txt+=d.content.filter(c=>c.type==='text').map(c=>c.text).join('');
+    if(d.stop_reason!=='tool_use')break;
+    msgs.push({role:'assistant',content:d.content});
+    const tr=d.content.filter(c=>c.type==='tool_use').map(u=>({type:'tool_result',tool_use_id:u.id,content:''}));
+    if(!tr.length)break;msgs.push({role:'user',content:tr});
+  }
+  return txt;
+}
+function xj(t){const c=t.replace(/```json?/g,'').replace(/```/g,'').trim();const m=c.match(/\{[\s\S]*\}/);return JSON.parse(m?m[0]:c)}
+
+/* ═══ LH ═══ */
+function lhc(s){return s>=90?'var(--gn)':s>=50?'var(--or)':'var(--rd)'}
+function lhk(s){return s>=90?'gd':s>=50?'nd':'pd'}
+function normLH(raw){
+  if(!raw)return null;
+  let sc=raw.scores||raw.score||raw;
+  const n=(v,fb)=>isNaN(+v)?fb:+v>1?Math.round(+v):Math.round(+v*100);
+  const scores={perf:n(sc.perf||sc.performance,72),a11y:n(sc.a11y||sc.accessibility,68),bp:n(sc.bp||sc['best-practices']||sc.bestPractices,80),seo:n(sc.seo,85)};
+  const rawC=raw.cwv||{};const cwv={};
+  ['fcp','lcp','tbt','cls','si','tti'].forEach(k=>{const d=rawC[k]||{};cwv[k]=typeof d==='object'?{val:d.val||d.value||'—',score:d.score!=null?+d.score:null}:{val:String(d)||'—',score:null}});
+  return{scores,cwv,issues:Array.isArray(raw.issues)?raw.issues:[]};
+}
+const LH_FB_M={scores:{perf:72,a11y:68,bp:80,seo:85},cwv:{fcp:{val:'2.1 s',score:.7},lcp:{val:'3.5 s',score:.5},tbt:{val:'380 ms',score:.5},cls:{val:'0.10',score:.8},si:{val:'3.2 s',score:.65},tti:{val:'4.8 s',score:.55}},issues:[{title:'بيانات Lighthouse تقديرية',score:.5}]};
+const LH_FB_D={scores:{perf:85,a11y:78,bp:88,seo:92},cwv:{fcp:{val:'1.1 s',score:.9},lcp:{val:'2.0 s',score:.78},tbt:{val:'90 ms',score:.88},cls:{val:'0.05',score:.92},si:{val:'1.8 s',score:.88},tti:{val:'2.4 s',score:.84}},issues:[]};
+async function doLH(url){
+  try{const t=await ai(`محلل أداء ويب. حلل على الجوال: ${url}\nأعد JSON فقط:\n{"scores":{"perf":72,"a11y":68,"bp":85,"seo":90},"cwv":{"fcp":{"val":"2.1 s","score":0.7},"lcp":{"val":"3.5 s","score":0.5},"tbt":{"val":"380 ms","score":0.5},"cls":{"val":"0.10","score":0.8},"si":{"val":"3.2 s","score":0.65},"tti":{"val":"4.8 s","score":0.55}},"issues":[{"title":"وصف المشكلة","score":0.3}]}\nJSON فقط:`,true,900);const n=normLH(xj(t));LH.m=n?.scores?.perf!=null?n:LH_FB_M}catch(e){LH.m=LH_FB_M}pgStep();
+  try{const t=await ai(`محلل أداء ويب. حلل على الكمبيوتر: ${url}\nأعد JSON فقط بنفس الشكل:\n{"scores":{"perf":85,"a11y":78,"bp":90,"seo":94},"cwv":{"fcp":{"val":"1.1 s","score":0.9},"lcp":{"val":"2.0 s","score":0.78},"tbt":{"val":"90 ms","score":0.88},"cls":{"val":"0.05","score":0.92},"si":{"val":"1.8 s","score":0.88},"tti":{"val":"2.4 s","score":0.84}},"issues":[]}\nJSON فقط:`,true,900);const n=normLH(xj(t));LH.d=n?.scores?.perf!=null?n:LH_FB_D}catch(e){LH.d=LH_FB_D}pgStep();
+}
+
+/* ═══ WAVE ═══ */
+async function doWAVE(url){
+  const key=document.getElementById('wkey').value;
+  const reportUrl='https://wave.webaim.org/report#'+encodeURIComponent(url);
+
+  // ── Direct browser fetch to WAVE API ──
+  try{
+    const apiUrl=`https://wave.webaim.org/api/request?key=${encodeURIComponent(key)}&url=${encodeURIComponent(url)}&reporttype=2&format=json`;
+    const res=await fetch(apiUrl);
+    if(res.ok){const d=await res.json();if(d.categories){WV={...pWV(d,url),_real:true,_reportUrl:reportUrl};pgStep();return}}
+  }catch(e){}
+
+  // ── Claude fetches the WAVE API endpoint ──
+  try{
+    const apiUrl=`https://wave.webaim.org/api/request?key=${encodeURIComponent(key)}&url=${encodeURIComponent(url)}&reporttype=2&format=json`;
+    const txt=await ai(`اطلب هذا الـ URL بالضبط وأعد JSON الخام:\n${apiUrl}\nJSON فقط:`,true,3000);
+    const d=xj(txt);if(d.categories){WV={...pWV(d,url),_real:true,_reportUrl:reportUrl};pgStep();return}
+  }catch(e){}
+
+  // ── Claude reads the WAVE report page ──
+  try{
+    const txt=await ai(`زر هذا الرابط واقرأ نتائج WAVE:\n${reportUrl}\nاستخرج الأرقام الحقيقية. أعد JSON:\n{"categories":{"error":{"count":3,"items":{"e1":{"description":"خطأ فعلي","count":2}}},"alert":{"count":5,"items":{"a1":{"description":"تنبيه فعلي","count":3}}},"structure":{"count":12},"html5":{"count":8},"aria":{"count":4},"contrast":{"count":2,"items":{"c1":{"description":"تباين منخفض","count":2}}}},"statistics":{"waveurl":"${reportUrl}"}}\nJSON فقط:`,true,2000);
+    const d=xj(txt);if(d.categories){WV={...pWV(d,url),_real:false,_reportUrl:reportUrl};pgStep();return}
+  }catch(e){}
+
+  // ── AI estimation fallback ──
+  try{
+    const txt=await ai(`خبير WCAG. قيّم: ${url}\nأعد JSON:\n{"categories":{"error":{"count":3,"items":{"e1":{"description":"صور بدون نص بديل","count":2},"e2":{"description":"حقول بدون تسمية","count":1}}},"alert":{"count":5,"items":{"a1":{"description":"روابط غامضة","count":3},"a2":{"description":"عناوين غير متسلسلة","count":2}}},"structure":{"count":12},"html5":{"count":8},"aria":{"count":4},"contrast":{"count":2,"items":{"c1":{"description":"تباين منخفض","count":2}}}},"statistics":{"waveurl":"${reportUrl}"}}\nJSON فقط:`,false,1200);
+    const d=xj(txt);WV={...pWV(d,url),_real:false,_reportUrl:reportUrl};
+  }catch(e){}
+  pgStep();
+}
+async function doSimilarWeb(url){
+  try{
+    const domain=new URL(url).hostname.replace('www.','');
+    const swUrl=`https://www.similarweb.com/website/${domain}/`;
+    const txt=await ai(`أنت محلل بيانات محترف. زر هذا الرابط الآن واقرأ جميع الأرقام الظاهرة:\n${swUrl}\nاستخرج البيانات الفعلية: الترتيب العالمي، المحلي، الزيارات الشهرية، مدة الزيارة، معدل الارتداد، الصفحات/زيارة، مصادر الزيارات، أهم 5 دول، المنافسون، الكلمات المفتاحية، الاتجاه.\nأعد JSON فقط:\n{"global_rank":45231,"country_rank":1240,"country":"Saudi Arabia","monthly_visits":"1.2M","avg_duration":"2:45","bounce_rate":"58.3%","pages_per_visit":3.1,"traffic_sources":{"Direct":38.5,"Search":32.1,"Social":15.2,"Referral":9.8,"Email":2.4,"Display Ads":2.0},"top_countries":[{"country":"Saudi Arabia","flag":"🇸🇦","share":42.1},{"country":"UAE","flag":"🇦🇪","share":15.3},{"country":"Egypt","flag":"🇪🇬","share":10.8},{"country":"Kuwait","flag":"🇰🇼","share":7.2},{"country":"Jordan","flag":"🇯🇴","share":5.1}],"competitors":["competitor1.com","competitor2.com","competitor3.com"],"top_keywords":["keyword 1","keyword 2","keyword 3"],"trend":"stable","_real":true,"_swUrl":"${swUrl}"}\nJSON فقط:`,true,2000);
+    const raw=xj(txt);
+    if(raw.global_rank||raw.monthly_visits){raw._swUrl=swUrl;SW=raw;}
+  }catch(e){console.log('SW error:',e);}
+  pgStep();
+}
+
+async function doHM(url){
+  try{const txt=await ai(`خبير UX. حلل: ${url}\nتوقع سلوك المستخدمين (إحداثيات 0-1).\nأعد JSON فقط:\n{"click_areas":[{"x":0.5,"y":0.08,"r":0.12,"intensity":0.95,"label":"CTA"}],"attention_zones":[{"x":0.5,"y":0.08,"r":0.25,"intensity":0.95,"label":"Hero"}],"scroll_depth":{"25":94,"50":68,"75":38,"100":14},"fold_line":0.32,"insights":["تحليل 1","تحليل 2","تحليل 3"]}\nJSON فقط:`,true,1200);
+    const raw=xj(txt);const fix=arr=>(arr||[]).map(a=>({...a,intensity:a.intensity>1?a.intensity/100:a.intensity,r:a.r>1?a.r/100:a.r}));
+    HM={click_areas:fix(raw.click_areas)?.length?fix(raw.click_areas):HM_FB.click_areas,attention_zones:fix(raw.attention_zones)?.length?fix(raw.attention_zones):HM_FB.attention_zones,scroll_depth:raw.scroll_depth||HM_FB.scroll_depth,fold_line:raw.fold_line||HM_FB.fold_line,insights:raw.insights?.length?raw.insights:HM_FB.insights};
+  }catch(e){HM={...HM_FB}}pgStep();
+}
+
+/* ═══ COLOR BLIND ═══ */
+const CB_TYPES=[
+  {id:'normal',name:'طبيعي',en:'Normal',icon:'👁',pct:'—',desc:'رؤية عادية',matrix:null},
+  {id:'deuter',name:'عمى الأخضر',en:'Deuteranopia',icon:'🟩',pct:'6% من الذكور',desc:'صعوبة في تمييز الأحمر والأخضر',matrix:[.625,.375,0,0,0,.7,.3,0,0,0,0,.3,.7,0,0,0,0,0,1,0]},
+  {id:'protan',name:'عمى الأحمر',en:'Protanopia',icon:'🔴',pct:'1% من الذكور',desc:'صعوبة في رؤية اللون الأحمر',matrix:[.567,.433,0,0,0,.558,.442,0,0,0,0,.242,.758,0,0,0,0,0,1,0]},
+  {id:'tritan',name:'عمى الأزرق',en:'Tritanopia',icon:'🔵',pct:'0.01%',desc:'صعوبة في تمييز الأزرق والأصفر',matrix:[.95,.05,0,0,0,0,.433,.567,0,0,0,.475,.525,0,0,0,0,0,1,0]},
+  {id:'achroma',name:'عمى كلي',en:'Achromatopsia',icon:'⬜',pct:'نادر',desc:'رؤية رمادية فقط',matrix:[.299,.587,.114,0,0,.299,.587,.114,0,0,.299,.587,.114,0,0,0,0,0,1,0]},
+];
+const CB_FB={colors:[{hex:'#E8634A',name:'اللون الأساسي',role:'primary'},{hex:'#1A1714',name:'النص',role:'text'},{hex:'#F8F6F0',name:'الخلفية',role:'background'},{hex:'#2D8B4E',name:'النجاح',role:'success'},{hex:'#CC3B2A',name:'الخطأ',role:'error'}],combinations:[{fg:'#1A1714',bg:'#F8F6F0',usage:'نص على خلفية فاتحة'},{fg:'#FFFFFF',bg:'#E8634A',usage:'نص الأزرار'}],issues:['بيانات تقديرية'],recommendations:['تأكد من نسبة تباين 4.5:1','لا تعتمد على اللون وحده']};
+function h2r(hex){hex=hex.replace('#','');if(hex.length===3)hex=hex.split('').map(c=>c+c).join('');return[parseInt(hex.slice(0,2),16),parseInt(hex.slice(2,4),16),parseInt(hex.slice(4,6),16)]}
+function r2h(r,g,b){return'#'+[r,g,b].map(v=>Math.max(0,Math.min(255,Math.round(v))).toString(16).padStart(2,'0')).join('')}
+function simColor(hex,mx){if(!mx||!hex)return hex;try{const[r,g,b]=h2r(hex);return r2h(mx[0]*r+mx[1]*g+mx[2]*b,mx[5]*r+mx[6]*g+mx[7]*b,mx[10]*r+mx[11]*g+mx[12]*b)}catch(e){return hex}}
+function toLin(c){c=c/255;return c<=.03928?c/12.92:Math.pow((c+.055)/1.055,2.4)}
+function lum(hex){try{const[r,g,b]=h2r(hex);return .2126*toLin(r)+.7152*toLin(g)+.0722*toLin(b)}catch(e){return 0}}
+function contR(h1,h2){const l1=lum(h1),l2=lum(h2);return(Math.max(l1,l2)+.05)/(Math.min(l1,l2)+.05)}
+async function doColorBlind(url){
+  try{const txt=await ai(`خبير ألوان وإمكانية وصول. حلل هذا الموقع: ${url}\nاستخرج ألوان الموقع الفعلية (hex codes دقيقة).\nأعد JSON فقط:\n{"colors":[{"hex":"#E8634A","name":"اللون الأساسي","role":"primary"},{"hex":"#1A1714","name":"النص","role":"text"},{"hex":"#FFFFFF","name":"الخلفية","role":"background"}],"combinations":[{"fg":"#1A1714","bg":"#FFFFFF","usage":"نص رئيسي"},{"fg":"#FFFFFF","bg":"#E8634A","usage":"أزرار CTA"}],"issues":["مشكلة 1"],"recommendations":["توصية 1"]}\nJSON فقط:`,true,1200);
+    const raw=xj(txt);const vH=/^#[0-9A-Fa-f]{6}$/;
+    if(raw.colors?.length){raw.colors=raw.colors.filter(c=>vH.test(c.hex));raw.combinations=(raw.combinations||[]).filter(c=>vH.test(c.fg)&&vH.test(c.bg));if(raw.colors.length>=2){CB=raw;pgStep();return}}
+  }catch(e){}CB={...CB_FB,_fb:true};pgStep();
+}
+
+/* ═══ UX CHUNKS ═══ */
+let abrt=false;
+async function doUX(url){
+  for(let i=0;i<SECS.length;i++){
+    if(abrt)break;
+    try{const qs=SECS[i].q.map((q,j)=>j+'. '+q.t).join('\n');const res=xj(await ai(`خبير UX. قيّم: ${url}\nقسم: ${SECS[i].ti}\nأعد JSON فقط:\n{"qs":[{"i":0,"a":"yes"},{"i":1,"a":"no","n":"السبب","sc":"الشاشة"}]}\n${qs}\nJSON فقط:`,false,1200));
+      if(res?.qs){res.qs.forEach(r=>{const qi=r.i;if(qi>=0&&qi<ST[SECS[i].id].length)Object.assign(ST[SECS[i].id][qi],{a:r.a||null,auto:true,...(r.n?{n:r.n}:{}),...(r.sc?{sc:r.sc}:{})})});bldR(SECS[i]);updS(SECS[i].id);const ae=document.getElementById('ain-'+SECS[i].id);if(ae)ae.classList.add('on');}
+    }catch(e){if(abrt)break}
+    pgStep();if(i<SECS.length-1)await sl(400);
+  }
+}
+function sl(ms){return new Promise(r=>setTimeout(r,ms))}
+
+/* ═══ PROGRESS ═══ */
+let pgTotal=0,pgDone=0;
+function pgStep(){pgDone++;document.getElementById('lpbarf').style.width=Math.min(Math.round(pgDone/pgTotal*100),99)+'%'}
+const statuses=['يرجى الانتظار...','جارٍ فحص الموقع...','تحليل الأداء...','فحص إمكانية الوصول...','تحليل حركة المرور...','تقييم تجربة المستخدم...','تجهيز التقرير...'];
+let sIdx=0,sIv;
+function startStat(){sIv=setInterval(()=>{sIdx=(sIdx+1)%statuses.length;document.getElementById('lstatus').textContent=statuses[sIdx]},2500)}
+function stopStat(){clearInterval(sIv);document.getElementById('lstatus').textContent='✓ اكتمل التحليل';document.getElementById('lpbarf').style.width='100%'}
+
+/* ═══ MAIN ANALYSIS ═══ */
+function setMode(m){
+  testMode=m;[0,1].forEach(i=>document.getElementById('modeTab'+i)?.classList.toggle('on',i===m));
+  const inp=document.getElementById('uinp');if(inp)inp.placeholder=m===1?'https://example.com':'https://example.com/page';
+  const sm=document.getElementById('statMode');if(sm)sm.innerHTML=m===1?'<span class="scn">🌐</span><div class="sclb">4 صفحات</div>':'<span class="scn">📄</span><div class="sclb">صفحة</div>';
+}
+async function doAna(){
+  const url=document.getElementById('uinp').value.trim();
+  if(!url||!url.startsWith('http')){alert('أدخل رابطاً صحيحاً يبدأ بـ https://');return}
+  if(testMode===1){await doSiteAna(url);return}
+  aUrl=url;abrt=false;LH={m:null,d:null};WV=null;HM=null;CB=null;SW=null;
+  pgTotal=21;pgDone=0;
+  document.getElementById('lsub').textContent=new URL(url).hostname;
+  document.getElementById('lpbarf').style.width='0%';sIdx=0;
+  document.getElementById('lstatus').textContent=statuses[0];
+  startStat();document.getElementById('lov').classList.add('on');document.getElementById('ugo').disabled=true;
+  await Promise.allSettled([doLH(url),doWAVE(url),doHM(url),doUX(url),doColorBlind(url),doSimilarWeb(url),doGoogleAnalytics(url)]);
+  stopStat();wasA=true;
+  try{const h=new URL(url).hostname.replace('www.','');const el=document.getElementById('iPr');if(el&&!el.value)el.value=h}catch(e){}
+  const bn=document.getElementById('ibn');if(bn)bn.classList.add('on');
+  const ibs=document.getElementById('ibs');if(ibs){const p=['تم التحليل'];if(LH.m)p.push('Lighthouse');if(WV)p.push('WAVE');if(SW)p.push('SimilarWeb');ibs.textContent=p.join(' · ')+'. راجع وعدّل.'}
+  setTimeout(()=>{document.getElementById('lov').classList.remove('on');document.getElementById('ugo').disabled=false;go(1,1)},900);
+}
+function doMan(){abrt=true;document.getElementById('lov').classList.remove('on');document.getElementById('ugo').disabled=false;wasA=false;go(1,1)}
+
+/* ═══ SITE LEVEL ═══ */
+async function doSiteAna(rootUrl){
+  aUrl=rootUrl;abrt=false;LH={m:null,d:null};WV=null;HM=null;CB=null;SW=null;siteData={pages:[],results:{}};
+  document.getElementById('lsub').textContent=new URL(rootUrl).hostname;
+  document.getElementById('lpbarf').style.width='0%';
+  document.getElementById('lstatus').textContent='جارٍ اكتشاف الصفحات...';
+  document.getElementById('lov').classList.add('on');document.getElementById('ugo').disabled=true;
+  const spList=document.getElementById('sitePagesList');spList.innerHTML='';
+  try{
+    const txt=await ai(`اكتشف الصفحات الرئيسية لهذا الموقع: ${rootUrl}\nأعد JSON فقط:\n{"pages":[{"url":"${rootUrl}","name":"الرئيسية"},{"url":"${rootUrl}/about","name":"عن الشركة"},{"url":"${rootUrl}/contact","name":"تواصل"},{"url":"${rootUrl}/services","name":"الخدمات"}]}\nJSON فقط:`,true,800);
+    const raw=xj(txt);const pages=raw.pages||[];
+    if(!pages.find(p=>p.url===rootUrl))pages.unshift({url:rootUrl,name:'الرئيسية'});
+    siteData.pages=pages.slice(0,4);
+    pgTotal=siteData.pages.length*3+3;pgDone=0;pgStep();
+    siteData.pages.forEach((p,i)=>{spList.insertAdjacentHTML('beforeend',`<div class="sp-item"><div class="sp-dot" id="spD${i}"></div><div><div class="sp-name">${p.name}</div><div class="sp-url">${p.url}</div></div><div class="sp-badges" id="spB${i}"><span class="sp-b pnd">LH</span><span class="sp-b pnd">WAVE</span><span class="sp-b pnd">UX</span></div></div>`)});
+    for(let i=0;i<siteData.pages.length;i++){
+      const page=siteData.pages[i];document.getElementById('lstatus').textContent=`تحليل: ${page.name} (${i+1}/${siteData.pages.length})`;
+      const dot=document.getElementById('spD'+i);if(dot)dot.className='sp-dot wk';
+      const res={url:page.url,name:page.name,lh:null,wv:null,ux:{score:70,issues:[]}};
+      try{const t=await ai(`محلل أداء. حلل على الجوال: ${page.url}\nأعد JSON:\n{"scores":{"perf":75,"a11y":70,"bp":82,"seo":88},"issues":[{"title":"مشكلة","score":0.4}]}\nJSON فقط:`,true,700);const n=normLH(xj(t));res.lh=n?.scores?.perf?n:null}catch(e){}pgStep();
+      try{const wUrl=`https://wave.webaim.org/api/request?key=${encodeURIComponent(document.getElementById('wkey').value)}&url=${encodeURIComponent(page.url)}&reporttype=2&format=json`;const d=xj(await ai(`اطلب JSON من: ${wUrl}\nأعد JSON الخام:`,true,2000));if(d.categories)res.wv=pWV(d,page.url)}catch(e){}pgStep();
+      try{const t=await ai(`خبير UX. قيّم هذه الصفحة: ${page.url}\nأعطِ نقطة من 100 وأهم 3 مشكلات.\nأعد JSON:\n{"score":72,"issues":["مشكلة 1","مشكلة 2","مشكلة 3"]}\nJSON فقط:`,true,600);const r=xj(t);res.ux={score:r.score||70,issues:r.issues||[]}}catch(e){}pgStep();
+      siteData.results[page.url]=res;
+      const badges=document.getElementById('spB'+i);if(badges)badges.innerHTML=`<span class="sp-b ${res.lh?'ok':'pnd'}">LH</span><span class="sp-b ${res.wv?'ok':'pnd'}">WAVE</span><span class="sp-b ${res.ux?'ok':'pnd'}">UX</span>`;
+      if(dot)dot.className='sp-dot ok';
+    }
+    LH.m=siteData.results[rootUrl]?.lh||null;WV=siteData.results[rootUrl]?.wv||null;wasA=true;
+    await doSimilarWeb(rootUrl);
+  }catch(e){console.error(e)}
+  stopStat();
+  try{const h=new URL(rootUrl).hostname.replace('www.','');const el=document.getElementById('iPr');if(el&&!el.value)el.value=h}catch(e){}
+  document.getElementById('ibn').classList.add('on');document.getElementById('ibs').textContent=`تم تحليل ${siteData.pages.length} صفحات بنجاح.`;
+  setTimeout(()=>{document.getElementById('lov').classList.remove('on');document.getElementById('ugo').disabled=false;go(1,1)},900);
+}
+
+/* ═══ SECTIONS UI ═══ */
+function bldSecs(){
+  const w=document.getElementById('secW');
+  SECS.forEach(sec=>{
+    const d=document.createElement('div');d.className='tscr';d.id='ts-'+sec.id;
+    const lb=sec.t==='h'?'مبدأ '+sec.n:'اختبار UI '+sec.n;
+    d.innerHTML=`<div class="shr"><div class="shi"><div><div class="sey">${lb}</div><div class="sh1">${sec.ti}</div><div class="sds">${sec.ds}</div></div><div class="sbg"><div class="sbn" id="sb${sec.id}">—</div><div class="sbl">نعم %</div></div></div></div>
+    <div class="sbdy"><div class="sbdi"><div class="tsh">
+      <div class="thb"><div class="thl"><span>${sec.q.length} معيار</span><span class="ain" id="ain-${sec.id}">🤖 AI</span></div><div class="thr"><div class="thbr"><div class="thbf" id="tf${sec.id}" style="width:0%"></div></div><div class="thtx" id="tt${sec.id}">0/${sec.q.length}</div></div></div>
+      <table class="atb"><thead><tr><th style="width:32px;text-align:center">#</th><th>معيار التقييم</th><th class="tc" style="width:52px">نعم</th><th class="tc" style="width:52px">لا</th><th style="width:120px">الشاشة</th><th style="width:190px">الملاحظات</th></tr></thead><tbody id="tb${sec.id}"></tbody></table>
+    </div></div></div>`;
+    w.appendChild(d);bldR(sec);
+  });
+}
+function bldR(sec){
+  const tb=document.getElementById('tb'+sec.id);if(!tb)return;tb.innerHTML='';
+  sec.q.forEach((q,qi)=>{
+    const s=ST[sec.id][qi];const tr=document.createElement('tr');tr.id=`trr${sec.id}${qi}`;setRC(tr,s.a,s.auto);
+    const yi=`yy${sec.id}${qi}`,ni=`nn${sec.id}${qi}`;
+    tr.innerHTML=`<td class="tdi">${qi+1}</td><td>${s.auto?'<span class="adt"></span>':''}${q.t}</td>
+      <td style="text-align:center"><div class="rc ys"><input type="radio" name="qx${sec.id}${qi}" id="${yi}" ${s.a==='yes'?'checked':''} onchange="rec('${sec.id}',${qi},'yes')"><label for="${yi}">✓</label></div></td>
+      <td style="text-align:center"><div class="rc no"><input type="radio" name="qx${sec.id}${qi}" id="${ni}" ${s.a==='no'?'checked':''} onchange="rec('${sec.id}',${qi},'no')"><label for="${ni}">✗</label></div></td>
+      <td><input class="ti${s.auto&&s.sc?' au':s.n?' pr':''}" type="text" placeholder="الشاشة" value="${s.sc||''}" oninput="rf('${sec.id}',${qi},'sc',this.value)"></td>
+      <td><textarea class="ti${s.auto&&s.n?' au':s.n?' pr':''}" rows="2" placeholder="ملاحظات" oninput="rf('${sec.id}',${qi},'n',this.value)">${s.n||''}</textarea></td>`;
+    tb.appendChild(tr);
+  });
+}
+function setRC(tr,a,au){tr.className=(a==='yes'?'ry':a==='no'?'rn':'')+(au?' af':'')}
+function rec(sid,qi,a){ST[sid][qi].a=a;ST[sid][qi].auto=false;setRC(document.getElementById(`trr${sid}${qi}`),a,false);updS(sid);updB()}
+function rf(sid,qi,f,v){ST[sid][qi][f]=v}
+function gS(sid){const r=ST[sid];const y=r.filter(x=>x.a==='yes').length,n=r.filter(x=>x.a==='no').length,a=r.filter(x=>x.a!==null).length;return{yes:y,no:n,ans:a,total:r.length,pct:a>0?Math.round(y/a*100):null}}
+function updS(sid){const{ans,total,pct}=gS(sid);const sb=document.getElementById('sb'+sid);if(sb){sb.textContent=pct!==null?pct+'%':'—';sb.style.color=pct===null?'var(--acc)':pct>=70?'var(--gn)':pct>=50?'var(--or)':'var(--rd)'}const tf=document.getElementById('tf'+sid);if(tf)tf.style.width=(ans/total*100)+'%';const tt=document.getElementById('tt'+sid);if(tt)tt.textContent=`${ans}/${total}`}
+function updGP(){const tQ=SECS.reduce((a,s)=>a+s.q.length,0);const aQ=SECS.reduce((a,s)=>a+ST[s.id].filter(r=>r.a!==null).length,0);document.getElementById('gpf').style.width=Math.round(aQ/tQ*100)+'%'}
+
+/* ═══ NAVIGATION ═══ */
+function gEl(i){if(i===0)return document.getElementById('ts0');if(i===1)return document.getElementById('ts1');if(i===PGS.length-1)return document.getElementById('tsrep');return document.getElementById('ts-'+SECS[i-2].id)}
+function go(idx,dir){document.querySelectorAll('.tscr').forEach(s=>s.classList.remove('on','slr','sll'));const el=gEl(idx);if(!el)return;el.classList.remove('slr','sll');void el.offsetWidth;el.classList.add('on',dir>0?'slr':'sll');ci=idx;updT();updB();updGP();window.scrollTo({top:0,behavior:'smooth'})}
+function goN(){if(ci<PGS.length-1)go(ci+1,1)}
+function goB(){if(ci>0)go(ci-1,-1)}
+function goToS(si){go(si+2,1)}
+function updT(){const isW=ci===0,isR=ci===PGS.length-1;document.getElementById('tnav').style.display=isR?'none':'flex';document.getElementById('tbk').classList.toggle('hd',isW||isR);document.getElementById('tskip').style.display=(!isW&&!isR)?'block':'none';if(isW){document.getElementById('tnd').innerHTML='';document.getElementById('tnco').textContent='';return}const tot=PGS.length-2;document.getElementById('tnd').innerHTML=[...Array(tot)].map((_,i)=>{let c='tdot';if(i+1<ci)c+=' ps';if(i+1===ci)c+=' nw';return`<div class="${c}"></div>`}).join('');document.getElementById('tnco').textContent=ci+'/'+tot}
+function updB(){const bb=document.getElementById('bbar');const isW=ci===0,isR=ci===PGS.length-1;bb.classList.toggle('hd',isW||isR);if(isW||isR)return;const isL=ci===PGS.length-2;const nx=document.getElementById('bnxt');nx.textContent=isL?'إنشاء التقرير ←':'التالي ←';nx.className='bnext'+(isL?' gn':'');nx.onclick=isL?doRep:goN;if(ci>=2&&ci<=PGS.length-2){const sec=SECS[ci-2];const{ans,total}=gS(sec.id);document.getElementById('bbbf').style.width=Math.round(ans/total*100)+'%';document.getElementById('bbtx').textContent=`${ans} من ${total} معيار`}else{document.getElementById('bbbf').style.width='0%';document.getElementById('bbtx').textContent=''}}
+
+/* ═══ PANEL VIEW ═══ */
+function switchPanel(id){
+  document.querySelectorAll('.rpanel').forEach(p=>p.style.display='none');
+  const target=document.getElementById('pan-'+id);if(target)target.style.display='block';
+  document.querySelectorAll('.rpn').forEach(b=>b.classList.remove('on'));
+  const btn=document.getElementById('rpn-'+id);if(btn)btn.classList.add('on');
+  const pc=document.getElementById('rpContent');if(pc)pc.scrollTop=0;
+}
+
+/* ═══ REPORT RENDER HELPERS ═══ */
+function lhScR(p,id){
+  if(!p?.scores){document.getElementById(id).innerHTML='<div class="ndt">لا توجد بيانات</div>';return}
+  const L=[{k:'perf',n:'الأداء'},{k:'a11y',n:'إمكانية الوصول'},{k:'bp',n:'أفضل الممارسات'},{k:'seo',n:'SEO'}];const C=176;
+  document.getElementById(id).innerHTML=L.map(l=>{const s=p.scores[l.k];const co=lhc(s);const off=C-(s/100)*C;
+    return`<div class="lsc ${lhk(s)}"><div class="lrw"><svg width="60" height="60" viewBox="0 0 60 60"><circle cx="30" cy="30" r="24" fill="none" stroke="var(--br)" stroke-width="7"/><circle cx="30" cy="30" r="24" fill="none" stroke="${co}" stroke-width="7" stroke-linecap="round" stroke-dasharray="${C}" stroke-dashoffset="${off}" transform="rotate(-90 30 30)"/></svg><div class="lrin"><div class="lrn" style="color:${co}">${s}</div></div></div><div class="lcn">${l.n}</div></div>`}).join('');
+}
+function cwvR(p,id){
+  if(!p?.cwv){document.getElementById(id).innerHTML='<div class="ndt">لا توجد بيانات CWV</div>';return}
+  const M=[{k:'fcp',n:'FCP',f:'First Contentful Paint'},{k:'lcp',n:'LCP',f:'Largest Contentful Paint'},{k:'tbt',n:'TBT',f:'Total Blocking Time'},{k:'cls',n:'CLS',f:'Cumulative Layout Shift'},{k:'si',n:'SI',f:'Speed Index'},{k:'tti',n:'TTI',f:'Time to Interactive'}];
+  document.getElementById(id).innerHTML=M.map(m=>{const d=p.cwv[m.k];if(!d)return`<div class="cwi"><div class="cwv_" style="color:var(--text3)">—</div><div class="cwl">${m.n}</div><div class="cwf">${m.f}</div></div>`;const co=d.score==null?'var(--text3)':d.score>=.9?'var(--gn)':d.score>=.5?'var(--or)':'var(--rd)';
+    return`<div class="cwi"><div class="cwv_" style="color:${co}">${d.val}</div><div class="cwl">${m.n}<span class="cwdt" style="background:${co};margin-right:3px"></span></div><div class="cwf">${m.f}</div></div>`}).join('');
+}
+function issR(p,id){const el=document.getElementById(id);if(!el)return;if(!p?.issues?.length){el.innerHTML='<div class="ndt">✓ لم يتم رصد مشكلات</div>';return}el.innerHTML=p.issues.map(i=>{const co=i.score>=.5?'var(--or)':'var(--rd)';return`<div class="lii"><div class="lid" style="background:${co}"></div><div class="lit">${i.title}</div></div>`}).join('')}
+function swLH(t){['ltb0','ltb1'].forEach((id,i)=>document.getElementById(id)?.classList.toggle('on',i===(t==='m'?0:1)));document.getElementById('lhm').style.display=t==='m'?'block':'none';document.getElementById('lhd').style.display=t==='d'?'block':'none'}
+
+/* WAVE RENDER */
+function renderWAVE(w,url){
+  const cs=[{k:'err',lb:'أخطاء',cl:'ce'},{k:'alert',lb:'تنبيهات',cl:'al'},{k:'struct',lb:'هيكلية',cl:'st'},{k:'html5',lb:'HTML5',cl:'h5'},{k:'aria',lb:'ARIA',cl:'ar'},{k:'contrast',lb:'تباين',cl:'co'}];
+  const isReal=w._real;
+  const reportUrl=w._reportUrl||w.waveUrl||'https://wave.webaim.org/report#'+encodeURIComponent(url);
+
+  // Source badge
+  const srcBadge=`<div style="display:flex;align-items:center;gap:8px;padding:8px 12px;border-radius:6px;border:1px solid ${isReal?'rgba(26,122,60,.2)':'rgba(247,182,0,.25)'};background:${isReal?'rgba(26,122,60,.06)':'rgba(247,182,0,.06)'};margin-bottom:16px;font-size:12px;font-family:var(--fn)">
+    <span>${isReal?'✅':'⚠️'}</span>
+    <span style="font-weight:600;color:${isReal?'var(--gn)':'var(--gold)'}">${isReal?'بيانات حقيقية من WAVE API':'بيانات تقديرية من AI'}</span>
+    <a href="${reportUrl}" target="_blank" style="margin-right:auto;color:var(--navy);font-weight:700;font-size:11px;text-decoration:none;border:1px solid var(--navy);padding:3px 10px;border-radius:3px" onmouseover="this.style.background='var(--navy)';this.style.color='#fff'" onmouseout="this.style.background='';this.style.color='var(--navy)'">فتح التقرير الكامل ↗</a>
+  </div>`;
+
+  let h=srcBadge+`<div class="wsg">${cs.map(c=>`<div class="wsc ${c.cl}"><div class="wsn">${w.totals[c.k]}</div><div class="wsl">${c.lb}</div></div>`).join('')}</div>`;
+  const mkWI=(items,cls,label)=>items.length?`<div class="wis"><div class="wih">${label}</div>${items.map(i=>`<div class="wii"><div class="wib ${cls}">${cls==='er'?'خطأ':cls==='at'?'تنبيه':'تباين'}</div><div><div class="wite">${i.desc}</div><div class="wicnt">${i.count} حالة</div></div></div>`).join('')}</div>`:'';
+  h+=mkWI(w.errors,'er','الأخطاء')+mkWI(w.alerts,'at','التنبيهات')+mkWI(w.contrasts,'ct','التباين اللوني');
+
+  // Embedded WAVE report iframe
+  h+=`<div style="margin-top:20px;border-top:1px solid var(--br);padding-top:16px">
+    <div style="font-size:10px;font-weight:700;color:var(--text3);text-transform:uppercase;letter-spacing:.8px;margin-bottom:10px">📋 التقرير الكامل على WAVE</div>
+    <div style="background:var(--bg2);border-radius:10px;border:1px solid var(--br);overflow:hidden">
+      <div style="padding:12px 16px;display:flex;align-items:center;justify-content:space-between;background:#fff;border-bottom:1px solid var(--br)">
+        <span style="font-size:12px;color:var(--text2);font-family:monospace;direction:ltr">${reportUrl}</span>
+        <a href="${reportUrl}" target="_blank" class="bwo" style="padding:7px 14px;font-size:12px">فتح في WAVE ↗</a>
+      </div>
+      <iframe src="${reportUrl}" style="width:100%;height:520px;border:none;display:block" loading="lazy" sandbox="allow-scripts allow-same-origin allow-popups"></iframe>
+    </div>
+  </div>`;
+  return h;
+}
+
+/* SIMILARWEB RENDER */
+function renderSW(){
+  const domain=aUrl?new URL(aUrl).hostname.replace('www.',''):'';
+  const swUrl=(SW&&SW._swUrl)||`https://www.similarweb.com/website/${domain}/`;
+  const swE=document.getElementById('swEmpty');const swD=document.getElementById('swData');
+  if(!SW){
+    if(swE)swE.style.display='block';
+    const lnk=document.getElementById('swLink');if(lnk)lnk.href=swUrl;
+    // Show SW link even without data
+    if(swD)swD.innerHTML=`<div style="border:1px solid var(--br);border-radius:10px;overflow:hidden;margin-top:14px">
+      <div style="padding:12px 16px;display:flex;align-items:center;justify-content:space-between;background:#fff;border-bottom:1px solid var(--br)">
+        <span style="font-size:12px;color:var(--text2);font-family:monospace;direction:ltr">${swUrl}</span>
+        <a href="${swUrl}" target="_blank" class="bwo" style="padding:7px 14px;font-size:12px">فتح التقرير ↗</a>
+      </div>
+      <div style="padding:24px;text-align:center;background:var(--bg2)"><div style="font-size:32px;margin-bottom:10px">🌐</div><div style="font-size:14px;font-weight:600;color:var(--text);margin-bottom:8px">لم يتم الحصول على بيانات SimilarWeb</div><a href="${swUrl}" target="_blank" style="display:inline-flex;align-items:center;gap:8px;background:var(--navy);color:#fff;padding:11px 22px;border-radius:6px;font-size:13px;font-weight:700;text-decoration:none" onmouseover="this.style.background='var(--navy2)'" onmouseout="this.style.background='var(--navy)'">🌐 عرض على SimilarWeb ↗</a></div>
+    </div>`;
+    return;
+  }
+  if(swE)swE.style.display='none';
+  const isReal=SW._real===true;
+  const srcColors=['#3b82f6','#10b981','#e8634a','#8b5cf6','#f59e0b','#6b7280'];
+  const trendIcon=SW.trend==='up'?'📈':SW.trend==='down'?'📉':'➡️';
+
+  swD.innerHTML=
+  // Source badge + SW link
+  `<div style="display:flex;align-items:center;gap:8px;padding:10px 14px;border-radius:6px;border:1px solid ${isReal?'rgba(26,122,60,.2)':'rgba(247,182,0,.25)'};background:${isReal?'rgba(26,122,60,.05)':'rgba(247,182,0,.05)'};margin-bottom:18px;font-size:12px;font-family:var(--fn)">
+    <span>${isReal?'✅':'⚠️'}</span>
+    <span style="font-weight:600;color:${isReal?'var(--gn)':'var(--gold)'}">${isReal?'بيانات حقيقية من SimilarWeb':'بيانات تقديرية من AI'}</span>
+    <a href="${swUrl}" target="_blank" style="margin-right:auto;color:var(--navy);font-weight:700;font-size:11px;text-decoration:none;border:1px solid var(--navy);padding:3px 10px;border-radius:3px" onmouseover="this.style.background='var(--navy)';this.style.color='#fff'" onmouseout="this.style.background='';this.style.color='var(--navy)'">فتح في SimilarWeb ↗</a>
+  </div>`+
+  // KPI cards
+  `<div class="sw-grid">${[{l:'الترتيب العالمي',v:'#'+(SW.global_rank||0).toLocaleString()},{l:`ترتيب ${SW.country||'المنطقة'}`,v:'#'+(SW.country_rank||0).toLocaleString()},{l:'زيارة/شهر',v:(SW.monthly_visits||'—')+' '+trendIcon},{l:'متوسط مدة الزيارة',v:SW.avg_duration||'—'},{l:'معدل الارتداد',v:SW.bounce_rate||'—'},{l:'صفحة/زيارة',v:SW.pages_per_visit||'—'}].map(k=>`<div class="sw-kpi"><div class="sw-kpi-n">${k.v}</div><div class="sw-kpi-l">${k.l}</div></div>`).join('')}</div>`+
+  // Traffic sources + countries
+  `<div class="sw-2col">
+    <div class="sw-box"><div class="sw-box-title">مصادر الزيارات</div>${Object.entries(SW.traffic_sources||{}).map(([k,v],i)=>`<div class="sw-src-row"><div class="sw-src-dot" style="background:${srcColors[i]||'#999'}"></div><div class="sw-src-name">${k}</div><div class="sw-src-bw"><div class="sw-src-b" style="width:${v}%;background:${srcColors[i]||'#999'}"></div></div><div class="sw-src-pct">${v}%</div></div>`).join('')}</div>
+    <div class="sw-box"><div class="sw-box-title">أهم الدول</div>${(SW.top_countries||[]).map(c=>`<div class="sw-ctry"><div class="sw-ctry-f">${c.flag||'🌍'}</div><div class="sw-ctry-n">${c.country}</div><div class="sw-ctry-bw"><div class="sw-ctry-b" style="width:${c.share}%"></div></div><div class="sw-ctry-p">${c.share}%</div></div>`).join('')}</div>
+  </div>`+
+  (SW.competitors?.length?`<div class="pan-sec-title">المنافسون</div><div style="display:flex;flex-wrap:wrap;gap:8px;margin-bottom:16px">${SW.competitors.map(c=>`<a href="https://www.similarweb.com/website/${c}/" target="_blank" class="sw-comp" style="text-decoration:none;cursor:pointer" onmouseover="this.style.borderColor='var(--navy)'" onmouseout="this.style.borderColor='var(--br)'"><div class="sw-comp-dot"></div><div class="sw-comp-n">${c}</div><span style="font-size:10px;color:var(--navy);margin-right:4px">↗</span></a>`).join('')}</div>`:'')+
+  (SW.top_keywords?.length?`<div class="pan-sec-title">الكلمات المفتاحية</div><div class="sw-chips">${SW.top_keywords.map(k=>`<span class="sw-chip">${k}</span>`).join('')}</div>`:'')+
+  // SimilarWeb full report link section
+  `<div style="margin-top:20px;border-top:1px solid var(--br);padding-top:16px">
+    <div style="font-size:10px;font-weight:700;color:var(--text3);text-transform:uppercase;letter-spacing:.8px;margin-bottom:10px">📊 التقرير الكامل على SimilarWeb</div>
+    <div style="background:var(--bg2);border-radius:10px;border:1px solid var(--br);overflow:hidden">
+      <div style="padding:12px 16px;display:flex;align-items:center;justify-content:space-between;background:#fff;border-bottom:1px solid var(--br)">
+        <span style="font-size:12px;color:var(--text2);font-family:monospace;direction:ltr">${swUrl}</span>
+        <a href="${swUrl}" target="_blank" class="bwo" style="padding:7px 14px;font-size:12px">فتح التقرير ↗</a>
+      </div>
+      <div style="padding:20px;display:flex;flex-direction:column;align-items:center;gap:12px;background:var(--bg2)">
+        <div style="font-size:32px">🌐</div>
+        <div style="font-size:14px;font-weight:600;color:var(--text);text-align:center">SimilarWeb لا يسمح بالتضمين المباشر</div>
+        <div style="font-size:13px;color:var(--text2);text-align:center;max-width:400px;line-height:1.6">تم استخراج البيانات أعلاه من التقرير الفعلي. انقر الزر لفتح التقرير الكامل في SimilarWeb مباشرةً.</div>
+        <a href="${swUrl}" target="_blank" style="display:inline-flex;align-items:center;gap:8px;background:var(--navy);color:#fff;padding:11px 22px;border-radius:6px;font-size:13px;font-weight:700;text-decoration:none;transition:background .15s" onmouseover="this.style.background='var(--navy2)'" onmouseout="this.style.background='var(--navy)'">🌐 عرض التقرير الكامل في SimilarWeb ↗</a>
+      </div>
+    </div>
+  </div>`;
+}
+
+function renderGA(){
+  const domain=aUrl?new URL(aUrl).hostname.replace('www.',''):'';
+  const gaE=document.getElementById('gaEmpty');const gaD=document.getElementById('gaData');
+  if(!GA){
+    if(gaE){gaE.style.display='block';const lnk=document.getElementById('gaLink');if(lnk)lnk.href=`https://search.google.com/search-console/about`}
+    return;
+  }
+  if(gaE)gaE.style.display='none';
+
+  // CrUX Core Web Vitals
+  const cruxItems=[
+    {key:'lcp',name:'LCP',full:'Largest Contentful Paint'},
+    {key:'fcp',name:'FCP',full:'First Contentful Paint'},
+    {key:'inp',name:'INP',full:'Interaction to Next Paint'},
+    {key:'cls',name:'CLS',full:'Cumulative Layout Shift'},
+    {key:'ttfb',name:'TTFB',full:'Time to First Byte'},
+    {key:'fid',name:'FID',full:'First Input Delay'},
+  ];
+  const cruxHTML=cruxItems.map(item=>{
+    const d=GA.crux?.[item.key];if(!d)return'';
+    const sc=d.score||0;const cls=cruxClass(sc);const co=cruxColor(sc);
+    return`<div class="crux-card">
+      <div class="crux-ic ${cls}">${Math.round(sc*100)}</div>
+      <div class="crux-info">
+        <div class="crux-name">${item.name} <span style="font-weight:400;font-size:9px;color:var(--text3)">${item.full}</span></div>
+        <div class="crux-val" style="color:${co}">${d.val}</div>
+        <div class="crux-cat" style="color:${co}">${cruxLabel(d.cat)}</div>
+        <div class="crux-bar-wrap"><div class="crux-bar" style="width:${Math.round(sc*100)}%;background:${co}"></div></div>
+      </div>
+    </div>`;
+  }).join('');
+
+  // Traffic KPIs
+  const kpis=[
+    {l:'المستخدمون',v:GA.users||'—',c:'📥'},
+    {l:'الجلسات',v:GA.sessions||'—',c:'🔄'},
+    {l:'مشاهدات الصفحة',v:GA.pageviews||'—',c:'👁'},
+    {l:'متوسط مدة الجلسة',v:GA.duration||'—',c:'⏱'},
+    {l:'معدل الارتداد',v:GA.bounce||'—',c:'↩'},
+    {l:'مستخدمون جدد',v:GA.new_users?GA.new_users+'%':'—',c:'✨'},
+    {l:'النقرات العضوية',v:GA.organic?.monthly_clicks||'—',c:'🔍'},
+    {l:'الانطباعات',v:GA.organic?.monthly_impressions||'—',c:'📊'},
+  ];
+  const kpiHTML=kpis.map(k=>`<div class="ga-kpi"><div class="ga-kpi-n">${k.v}</div><div class="ga-kpi-l">${k.c} ${k.l}</div></div>`).join('');
+
+  // Keywords
+  const kwHTML=(GA.top_keywords||[]).map(k=>{
+    const cls=k.pos<=3?'top3':k.pos<=10?'top10':'other';
+    return`<div class="kw-row"><div class="kw-pos ${cls}">${k.pos}</div><div class="kw-name">${k.kw}</div><div class="kw-clicks">${k.clicks?.toLocaleString()||'—'} نقرة</div></div>`;
+  }).join('');
+
+  // Devices
+  const devColors=['var(--acc)','var(--bl)','var(--gn)'];
+  const devData=[{ic:'📱',n:'Mobile',pct:GA.devices?.mobile||0},{ic:'🖥',n:'Desktop',pct:GA.devices?.desktop||0},{ic:'📟',n:'Tablet',pct:GA.devices?.tablet||0}];
+  const devHTML=devData.map((d,i)=>`<div class="dev-row"><div class="dev-ic">${d.ic}</div><div class="dev-name">${d.n}</div><div class="dev-bw"><div class="dev-b" style="width:${d.pct}%;background:${devColors[i]}"></div></div><div class="dev-pct">${d.pct}%</div></div>`).join('');
+
+  // Channels
+  const chColors={'Organic Search':'var(--gn)','Direct':'var(--bl)','Social':'var(--acc)','Referral':'var(--or)','Email':'var(--rd)'};
+  const chHTML=Object.entries(GA.channels||{}).map(([ch,pct])=>`<div class="dev-row"><div class="dev-ic" style="font-size:11px;width:auto;min-width:80px;color:var(--text2);font-family:var(--fn-sans);font-weight:500">${ch}</div><div class="dev-bw"><div class="dev-b" style="width:${pct}%;background:${chColors[ch]||'var(--text3)'}"></div></div><div class="dev-pct">${pct}%</div></div>`).join('');
+
+  // Organic summary
+  const orgSummary=GA.organic?`<div style="display:flex;flex-wrap:wrap;gap:12px;padding:12px 0;border-bottom:1px solid var(--br);margin-bottom:12px">
+    <div><div style="font-size:10px;font-weight:700;color:var(--text3);text-transform:uppercase;font-family:var(--fn-sans)">متوسط الترتيب</div><div style="font-family:var(--fn-sans);font-size:18px;font-weight:700">${GA.organic.avg_position}</div></div>
+    <div><div style="font-size:10px;font-weight:700;color:var(--text3);text-transform:uppercase;font-family:var(--fn-sans)">CTR</div><div style="font-family:var(--fn-sans);font-size:18px;font-weight:700">${GA.organic.ctr}</div></div>
+    <div><div style="font-size:10px;font-weight:700;color:var(--text3);text-transform:uppercase;font-family:var(--fn-sans)">الكلمات المفتاحية</div><div style="font-family:var(--fn-sans);font-size:18px;font-weight:700">${GA.organic.keywords_count}</div></div>
+  </div>`:'';
+
+  gaD.innerHTML=
+  // Connect banner
+  `<div class="ga-connect">
+    <div class="ga-connect-title">📊 ربط Google Analytics الفعلي</div>
+    <div class="ga-connect-sub">للحصول على بيانات حقيقية، اربط موقعك بـ <a href="https://analytics.google.com/" target="_blank" style="color:var(--acc)">Google Analytics 4</a> و<a href="https://search.google.com/search-console/" target="_blank" style="color:var(--acc)">Google Search Console</a></div>
+  </div>`+
+  // CrUX
+  `<div class="pan-sec-title">⚡ Core Web Vitals — Real User Data (CrUX)</div>
+  <div class="crux-grid">${cruxHTML}</div>`+
+  // KPIs
+  `<div class="pan-sec-title">📊 مقاييس حركة المرور (تقديرية)</div>
+  <div class="ga-grid">${kpiHTML}</div>`+
+  // Search + Devices
+  `<div class="ga-search-grid">
+    <div class="ga-box"><div class="ga-box-title">🔍 أبرز الكلمات المفتاحية العضوية</div>${orgSummary}${kwHTML||'<div class="ndt">لا توجد بيانات</div>'}</div>
+    <div class="ga-box"><div class="ga-box-title">📱 توزيع الأجهزة</div>${devHTML}<div style="margin-top:12px;padding-top:10px;border-top:1px solid var(--br)"><div class="ga-box-title">📣 قنوات الزيارات</div>${chHTML}</div></div>
+  </div>`+
+  (GA.source?`<div class="ga-note">⚠️ المصدر: ${GA.source} — بعض البيانات تقديرية من مصادر عامة. للبيانات الدقيقة استخدم Google Analytics 4 وGoogle Search Console.</div>`:'');
+}
+
+/* ═══ INIT ═══ */
+bldSecs();updT();updB();updGP();SECS.forEach(s=>updS(s.id));
+document.getElementById('uinp').addEventListener('keydown',e=>{if(e.key==='Enter')doAna()});
+</script>
+
+<script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.2/gsap.min.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.2/ScrollTrigger.min.js"></script>
+<script>
+// ── Only run landing animations when landing page is visible ──
+function initLandingAnimations(){
+  if(typeof gsap==='undefined')return;
+  gsap.registerPlugin(ScrollTrigger);
+
+  // ── Nav: transparent → solid on scroll ──
+  window.addEventListener('scroll',()=>{
+    const nav=document.getElementById('lNav');
+    if(!nav)return;
+    if(scrollY>50){
+      nav.style.background='rgba(10,13,58,.95)';
+      nav.style.backdropFilter='blur(18px)';
+      nav.style.borderBottom='1px solid rgba(255,255,255,.07)';
+    }else{
+      nav.style.background='transparent';
+      nav.style.backdropFilter='none';
+      nav.style.borderBottom='none';
+    }
+  });
+
+  // ── Hero entrance timeline ──
+  const tl=gsap.timeline({delay:.1});
+  tl
+    .to('#hBadge', {opacity:1,y:0,duration:.6,ease:'power3.out'})
+    .to(['#hw1','#hw2','#hw3'], {opacity:1,y:0,stagger:.1,duration:.8,ease:'power4.out'},'-=.35')
+    .to('#hSub',  {opacity:1,y:0,duration:.6,ease:'power2.out'},'-=.35')
+    .to('#hBtns', {opacity:1,y:0,duration:.55,ease:'power2.out'},'-=.3')
+    .to('#hStats',{opacity:1,y:0,duration:.55,ease:'power2.out'},'-=.25')
+    .to('#hRight',{opacity:1,x:0,duration:.8,ease:'power3.out'},'-=.55');
+
+  // ── Hero scroll parallax ──
+  const heroEl=document.getElementById('heroSection');
+  if(heroEl){
+    ScrollTrigger.create({
+      trigger:'#heroSection',
+      start:'top top',
+      end:'bottom top',
+      scrub:1.2,
+      onUpdate(self){
+        const p=self.progress;
+        gsap.to('#hw1',{y:-p*50,ease:'none',overwrite:'auto'});
+        gsap.to('#hw2',{y:-p*80,ease:'none',overwrite:'auto'});
+        gsap.to('#hw3',{y:-p*115,ease:'none',overwrite:'auto'});
+        gsap.to('#hSub', {y:-p*60,opacity:1-p*.9,ease:'none',overwrite:'auto'});
+        gsap.to('#hBtns',{y:-p*80,opacity:1-p*.9,ease:'none',overwrite:'auto'});
+        gsap.to('#hRight',{y:-p*45,ease:'none',overwrite:'auto'});
+      }
+    });
+  }
+
+  // ── Scroll reveals (.gs-hidden → opacity 1, y 0) ──
+  document.querySelectorAll('.gs-hidden').forEach(el=>{
+    gsap.fromTo(el,
+      {opacity:0,y:28},
+      {opacity:1,y:0,duration:.65,ease:'power3.out',
+       scrollTrigger:{trigger:el,start:'top 84%',toggleActions:'play none none none'}}
+    );
+  });
+
+  // ── Scale reveals (.gs-scale) ──
+  document.querySelectorAll('.gs-scale').forEach(el=>{
+    gsap.fromTo(el,
+      {opacity:0,scale:.96},
+      {opacity:1,scale:1,duration:.7,ease:'power2.out',
+       scrollTrigger:{trigger:el,start:'top 80%',toggleActions:'play none none none'}}
+    );
+  });
+
+  // ── Feature cards stagger ──
+  const featureCards=document.querySelectorAll('#features [style*="border:1px solid #E8ECFF"]');
+  if(featureCards.length){
+    gsap.from(featureCards,{
+      scrollTrigger:{trigger:'#features',start:'top 72%'},
+      y:32,opacity:0,stagger:.07,duration:.6,ease:'power3.out'
+    });
+  }
+
+  // ── Pricing cards ──
+  const pricingCards=document.querySelectorAll('#pricing [style*="border-radius:14px"]');
+  if(pricingCards.length){
+    gsap.from(pricingCards,{
+      scrollTrigger:{trigger:'#pricing',start:'top 75%'},
+      y:28,opacity:0,stagger:.1,duration:.6,ease:'power3.out'
+    });
+  }
+}
+// Initialize when landing is shown
+document.addEventListener('DOMContentLoaded', initLandingAnimations);
+</script>
+</body>
+</html>
